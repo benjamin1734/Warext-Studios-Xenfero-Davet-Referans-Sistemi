@@ -1,0 +1,64 @@
+name: XenForo Kurulum Paketi Oluştur
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sürümü oku
+        id: version
+        shell: bash
+        run: |
+          VERSION=$(python -c "import json; print(json.load(open('upload/src/addons/WarextStudios/ReferralSystem/addon.json', encoding='utf-8'))['version_string'])")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+          echo "file=Warext-Studios-XenForo-Davet-Referans-Sistemi-v$VERSION.zip" >> "$GITHUB_OUTPUT"
+
+      - name: Doğrudan kurulum ZIP paketini oluştur
+        shell: bash
+        run: |
+          rm -rf dist
+          mkdir -p dist
+          zip -r "dist/${{ steps.version.outputs.file }}" upload -x "*/.DS_Store" "*/Thumbs.db"
+
+      - name: Paketi doğrula
+        shell: bash
+        run: |
+          test -f "dist/${{ steps.version.outputs.file }}"
+          unzip -Z1 "dist/${{ steps.version.outputs.file }}" | grep -Fx "upload/src/addons/WarextStudios/ReferralSystem/addon.json"
+          test "$(unzip -Z1 "dist/${{ steps.version.outputs.file }}" | grep -E '^upload/src/addons/WarextStudios/ReferralSystem/' | wc -l)" -gt 10
+          if unzip -Z1 "dist/${{ steps.version.outputs.file }}" | grep -E '(^|/)(\.git|\.github|README\.md|CHANGELOG\.md|SECURITY\.md|CONTRIBUTING\.md|LICENSE)($|/)' ; then
+            exit 1
+          fi
+
+      - name: İşlem çıktısını yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: xenforo-direct-install-v${{ steps.version.outputs.version }}
+          path: dist/${{ steps.version.outputs.file }}
+          if-no-files-found: error
+
+      - name: GitHub sürümünü yeniden yayımla
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+          FILE: ${{ steps.version.outputs.file }}
+          VERSION: ${{ steps.version.outputs.version }}
+        shell: bash
+        run: |
+          git tag -f "$TAG" "$GITHUB_SHA"
+          git push -f origin "refs/tags/$TAG"
+          gh release delete "$TAG" --yes >/dev/null 2>&1 || true
+          gh release create "$TAG" "dist/$FILE" --target "$GITHUB_SHA" --title "Warext Studios - XenForo Davet Referans Sistemi V$VERSION" --notes "XenForo Admin CP > Add-ons > Install/upgrade from archive bölümüne doğrudan yüklenebilir kurulum paketidir. ZIP kökünde yalnızca upload/ dizini bulunur."

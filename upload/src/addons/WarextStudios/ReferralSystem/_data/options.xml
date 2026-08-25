@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="wrxtReferralEnabled" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="wrxtReferral" display_order="90"/>
+  </option>
+  <option option_id="wrxtReferralCookieDays" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>30</default_value>
+    <edit_format_params>min=1
+max=90
+step=1
+units={{ phrase('units_days') }}</edit_format_params>
+    <relation group_id="wrxtReferral" display_order="100"/>
+  </option>
+  <option option_id="wrxtReferralMinDays" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>3</default_value>
+    <edit_format_params>min=0
+max=3650
+step=1
+units={{ phrase('units_days') }}</edit_format_params>
+    <relation group_id="wrxtReferral" display_order="110"/>
+  </option>
+  <option option_id="wrxtReferralMinMessages" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>3</default_value>
+    <edit_format_params>min=0
+max=100000
+step=1</edit_format_params>
+    <relation group_id="wrxtReferral" display_order="120"/>
+  </option>
+  <option option_id="wrxtReferralShowList" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="wrxtReferral" display_order="130"/>
+  </option>
+  <option option_id="wrxtReferralIpHashRetentionDays" edit_format="spinbox" data_type="unsigned_integer" advanced="1">
+    <default_value>90</default_value>
+    <edit_format_params>min=30
+max=3650
+step=1
+units={{ phrase('units_days') }}</edit_format_params>
+    <relation group_id="wrxtReferral" display_order="140"/>
+  </option>
+</options>

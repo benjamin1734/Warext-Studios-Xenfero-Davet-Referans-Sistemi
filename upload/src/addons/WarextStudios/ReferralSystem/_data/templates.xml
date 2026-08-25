@@ -1,0 +1,920 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="wrxt_referral_dashboard" version_id="1000102" version_string="1.0.0"><![CDATA[<xf:title>Davetlerim</xf:title>
+<xf:css src="wrxt_referral.less" />
+
+<div class="block">
+    <div class="block-container">
+        <h2 class="block-header">Davet ilerlemen</h2>
+        <div class="block-body">
+            <div class="block-row">
+                <div class="wrxtReferral-stats">
+                    <div><strong>{$stats.total|number}</strong><span>Toplam</span></div>
+                    <div><strong>{$stats.valid|number}</strong><span>Geçerli</span></div>
+                    <div><strong>{$stats.pending|number}</strong><span>Bekleyen</span></div>
+                    <div><strong>{$stats.review|number}</strong><span>İncelemede</span></div>
+                </div>
+
+                <xf:if is="$progress.points">
+                    <div class="wrxtReferral-progressScroller">
+                        <div class="wrxtReferral-progressMap">
+                            <div class="wrxtReferral-progressTrack">
+                                <div class="wrxtReferral-progressFill" style="width: {$progress.percent}%;"></div>
+                            </div>
+                            <xf:foreach loop="$progress.points" value="$point">
+                                <xf:set var="$milestone" value="{$point.milestone}" />
+                                <div class="wrxtReferral-milestoneNode {{ $milestone.required_referrals <= $stats.valid ? 'is-complete' : '' }}" style="left: {$point.position}%;" data-xf-init="tooltip" title="{$milestone.description|for_attr}">
+                                    <span class="wrxtReferral-milestoneIcon">
+                                        <xf:if is="$milestone.image_url">
+                                            <img src="{$milestone.image_url}" alt="" class="wrxtReferral-milestoneImage" />
+                                        <xf:else />
+                                            <i class="fa {$milestone.icon}" aria-hidden="true"></i>
+                                        </xf:if>
+                                    </span>
+                                    <span class="wrxtReferral-milestoneDot"></span>
+                                    <strong>{$milestone.required_referrals|number}</strong>
+                                    <span class="wrxtReferral-milestoneTitle">{$milestone.title}</span>
+                                </div>
+                            </xf:foreach>
+                        </div>
+                    </div>
+                <xf:else />
+                    <div class="blockMessage">Henüz aktif ödül hedefi tanımlanmamış.</div>
+                </xf:if>
+
+                <xf:if is="$progress.milestones">
+                    <div class="wrxtReferral-progressText">
+                        <xf:if is="$progress.next">
+                            {$stats.valid|number} geçerli davet · Sonraki hedef {$progress.target|number} · {$progress.remaining|number} davet kaldı
+                        <xf:else />
+                            {$stats.valid|number} geçerli davet · Tüm mevcut hedeflere ulaştın
+                        </xf:if>
+                    </div>
+                </xf:if>
+            </div>
+        </div>
+    </div>
+</div>
+
+<xf:if is="$rewards">
+    <div class="block">
+        <div class="block-container">
+            <h2 class="block-header">Ödüllerim</h2>
+            <div class="block-body">
+                <xf:datalist data-xf-init="responsive-data-list">
+                    <xf:foreach loop="$rewards" value="$reward">
+                        <xf:datarow>
+                            <xf:cell class="dataList-cell--main">
+                                <div class="dataList-mainRow"><strong>{$reward.reward_title}</strong></div>
+                                <div class="dataList-subRow">
+                                    {$reward.milestone_required_referrals|number} geçerli davet
+                                    <xf:if is="$reward.reward_type == 'user_group'"> · Kullanıcı grubu ödülü<xf:else /> · Görsel ödül</xf:if>
+                                    <xf:if is="$reward.granted_date"> · <xf:date time="$reward.granted_date" /></xf:if>
+                                </div>
+                            </xf:cell>
+                            <xf:cell>
+                                <xf:if is="$reward.status == 'granted'">
+                                    <span class="label label--green">Teslim edildi</span>
+                                <xf:elseif is="$reward.status == 'revoked'" />
+                                    <span class="label label--red">Geri alındı</span>
+                                <xf:elseif is="$reward.status == 'failed'" />
+                                    <span class="label label--orange">Teslim hatası</span>
+                                <xf:else />
+                                    <span class="label label--yellow">Bekliyor</span>
+                                </xf:if>
+                            </xf:cell>
+                        </xf:datarow>
+                    </xf:foreach>
+                </xf:datalist>
+            </div>
+        </div>
+    </div>
+</xf:if>
+
+<div class="block">
+    <div class="block-container">
+        <h2 class="block-header">Arkadaşını davet et</h2>
+        <div class="block-body">
+            <xf:if is="!$code.is_active">
+                <div class="blockMessage blockMessage--important">Davet kodun yetkili tarafından askıya alınmış. Kod ve bağlantı yeni kayıtlar için kullanılamaz.</div>
+            </xf:if>
+
+            <div class="block-row">
+                <h3 class="block-minorHeader">Davet bağlantısı</h3>
+                <div class="wrxtReferral-copyGroup {{ $code.is_active ? 'is-active' : '' }}">
+                    <input type="text" class="input wrxtReferral-copyInput" value="{$inviteLink}" readonly="readonly" />
+                    <xf:if is="$code.is_active">
+                        <a class="button button--link wrxtReferral-copyButton" data-xf-init="copy-to-clipboard" data-copy-text="{$inviteLink}">Kopyala</a>
+                    </xf:if>
+                </div>
+            </div>
+
+            <div class="block-row">
+                <h3 class="block-minorHeader">Davet kodu</h3>
+                <div class="wrxtReferral-copyGroup {{ $code.is_active ? 'is-active' : '' }}">
+                    <input type="text" class="input wrxtReferral-copyInput" value="{$code.code}" readonly="readonly" />
+                    <xf:if is="$code.is_active">
+                        <a class="button button--link wrxtReferral-copyButton" data-xf-init="copy-to-clipboard" data-copy-text="{$code.code}">Kopyala</a>
+                    </xf:if>
+                </div>
+                <div class="formRow-explain">Bu kod hesabına kalıcı olarak bağlıdır ve normal kullanıcı tarafından değiştirilemez.</div>
+            </div>
+
+            <xf:if is="$code.is_active">
+                <xf:js src="vendor/kjua/kjua.min.js" />
+                <div class="block-row block-row--separated">
+                    <h3 class="block-minorHeader">Davetini paylaş</h3>
+                    <div class="wrxtReferral-shareGrid">
+                        <div class="wrxtReferral-shareActions">
+                            <a href="{$whatsappShareUrl}" target="_blank" rel="noopener noreferrer" class="button button--link">WhatsApp</a>
+                            <a href="{$telegramShareUrl}" target="_blank" rel="noopener noreferrer" class="button button--link">Telegram</a>
+                            <a class="button button--link" data-xf-init="copy-to-clipboard" data-copy-text="{$inviteLink}">Bağlantıyı kopyala</a>
+                        </div>
+                        <div class="wrxtReferral-qrBox">
+                            <span id="js-wrxtReferralQrCode" class="wrxtReferral-qrCode"></span>
+                            <span class="u-muted">QR kodu telefonundan taratarak davet bağlantısını açabilirsin.</span>
+                        </div>
+                    </div>
+                </div>
+                <xf:js>
+                    const el = document.querySelector('#js-wrxtReferralQrCode')
+                    if (el)
+                    {
+                        const qr = kjua({
+                            text: '{$inviteLink|escape('js')}',
+                            render: 'img'
+                        })
+                        el.innerHTML = ''
+                        el.append(qr)
+                    }
+                </xf:js>
+            </xf:if>
+
+            <xf:if is="$canManageCodes OR $canReviewReferrals">
+                <div class="block-row block-row--separated buttonGroup">
+                    <xf:if is="$canManageCodes">
+                        <a href="{{ link('davetler/manage') }}" class="button button--link">Davet kodu yönetimi</a>
+                    </xf:if>
+                    <xf:if is="$canReviewReferrals">
+                        <a href="{{ link('davetler/review') }}" class="button button--link">Şüpheli davetleri incele</a>
+                    </xf:if>
+                </div>
+            </xf:if>
+        </div>
+    </div>
+</div>
+
+<xf:if is="$xf.options.wrxtReferralShowList">
+    <div class="block">
+        <div class="block-container">
+            <h2 class="block-header">Son davetlerin</h2>
+            <div class="block-body">
+                <xf:if is="$referrals">
+                    <xf:datalist data-xf-init="responsive-data-list">
+                        <xf:foreach loop="$referrals" value="$referral">
+                            <xf:datarow>
+                                <xf:cell class="dataList-cell--main">
+                                    <div class="dataList-mainRow">
+                                        <xf:if is="$referral.Invited"><xf:username user="$referral.Invited" /><xf:else />Silinmiş kullanıcı</xf:if>
+                                    </div>
+                                    <div class="dataList-subRow"><xf:date time="$referral.created_date" /></div>
+                                </xf:cell>
+                                <xf:cell>
+                                    <xf:if is="$referral.status == 'valid'"><span class="label label--green">Geçerli</span>
+                                    <xf:elseif is="$referral.status == 'pending'" /><span class="label label--yellow">Bekleyen</span>
+                                    <xf:elseif is="$referral.status == 'review'" /><span class="label label--orange">İncelemede</span>
+                                    <xf:else /><span class="label label--red">Reddedildi</span>
+                                    </xf:if>
+                                </xf:cell>
+                            </xf:datarow>
+                        </xf:foreach>
+                    </xf:datalist>
+                    <div class="block-footer"><a href="{{ link('davetler/history') }}" class="button button--link">Tüm davetleri görüntüle</a></div>
+                <xf:else />
+                    <div class="block-row">Henüz davetin bulunmuyor.</div>
+                </xf:if>
+            </div>
+        </div>
+    </div>
+</xf:if>]]></template>
+
+  <template type="public" title="wrxt_referral_history" version_id="1000102" version_string="1.0.0"><![CDATA[<xf:title>Tüm davetlerim</xf:title>
+
+<xf:form action="{{ link('davetler/history') }}" method="get" class="block">
+    <div class="block-container">
+        <h2 class="block-header">Davet geçmişini filtrele</h2>
+        <div class="block-body">
+            <xf:selectrow name="status" value="{$status}" label="Durum">
+                <xf:option value="">Tümü</xf:option>
+                <xf:option value="valid">Geçerli</xf:option>
+                <xf:option value="pending">Bekleyen</xf:option>
+                <xf:option value="review">İncelemede</xf:option>
+                <xf:option value="rejected">Reddedildi</xf:option>
+            </xf:selectrow>
+        </div>
+        <xf:submitrow submit="Filtrele" />
+    </div>
+</xf:form>
+
+<div class="block">
+    <div class="block-container">
+        <h2 class="block-header">Davet geçmişi</h2>
+        <div class="block-body">
+            <xf:if is="$referrals">
+                <xf:datalist data-xf-init="responsive-data-list">
+                    <xf:foreach loop="$referrals" value="$referral">
+                        <xf:datarow>
+                            <xf:cell class="dataList-cell--main">
+                                <div class="dataList-mainRow"><xf:if is="$referral.Invited"><xf:username user="$referral.Invited" /><xf:else />Silinmiş kullanıcı</xf:if></div>
+                                <div class="dataList-subRow">Kod: {$referral.referral_code} · <xf:date time="$referral.created_date" /></div>
+                            </xf:cell>
+                            <xf:cell>
+                                <xf:if is="$referral.status == 'valid'"><span class="label label--green">Geçerli</span>
+                                <xf:elseif is="$referral.status == 'pending'" /><span class="label label--yellow">Bekleyen</span>
+                                <xf:elseif is="$referral.status == 'review'" /><span class="label label--orange">İncelemede</span>
+                                <xf:else /><span class="label label--red">Reddedildi</span>
+                                </xf:if>
+                            </xf:cell>
+                        </xf:datarow>
+                    </xf:foreach>
+                </xf:datalist>
+            <xf:else />
+                <div class="block-row">Bu filtreye uygun davet bulunmuyor.</div>
+            </xf:if>
+        </div>
+        <xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="davetler/history" params="{{ {'status': $status} }}" wrapperclass="block-outer block-outer--after" />
+    </div>
+</div>]]></template>
+
+  <template type="public" title="wrxt_referral_manage" version_id="1000102" version_string="1.0.0"><![CDATA[<xf:title>Davet Kodu Yönetimi</xf:title>
+
+<xf:form action="{{ link('davetler/manage') }}" method="get" class="block">
+    <div class="block-container">
+        <h2 class="block-header">Kullanıcı bul</h2>
+        <div class="block-body">
+            <xf:textboxrow name="username" value="{$username}" label="Kullanıcı adı" autocomplete="off" />
+        </div>
+        <xf:submitrow submit="Ara" />
+    </div>
+</xf:form>
+
+<xf:if is="$target AND $code">
+    <xf:form action="{{ link('davetler/manage-save') }}" class="block">
+        <div class="block-container">
+            <h2 class="block-header">{$target.username} · Davet kodu</h2>
+            <div class="block-body">
+                <input type="hidden" name="user_id" value="{$target.user_id}" />
+                <xf:textboxrow name="code" value="{$code.code}" maxlength="24" label="Davet kodu" explain="6-24 karakter, yalnızca harf ve rakam." />
+                <xf:selectrow name="is_active" value="{$code.is_active}" label="Kod durumu">
+                    <xf:option value="1">Aktif</xf:option>
+                    <xf:option value="0">Askıya alınmış</xf:option>
+                </xf:selectrow>
+                <xf:textarearow name="suspension_reason" value="{$code.suspension_reason}" maxlength="255" label="Askıya alma nedeni" explain="Kod askıya alınacaksa neden zorunludur." autosize="true" />
+                <xf:if is="$code.modified_date">
+                    <div class="formRow">
+                        <div class="formRow-labelWrapper"><label class="formRow-label">Son değişiklik</label></div>
+                        <div class="formRow-main"><xf:date time="$code.modified_date" /></div>
+                    </div>
+                </xf:if>
+            </div>
+            <xf:submitrow submit="Kaydet" />
+        </div>
+    </xf:form>
+</xf:if>]]></template>
+
+  <template type="public" title="wrxt_referral_review" version_id="1000102" version_string="1.0.0"><![CDATA[<xf:title>Şüpheli Davet İnceleme</xf:title>
+
+<div class="block">
+    <div class="block-container">
+        <h2 class="block-header">İnceleme bekleyen davetler</h2>
+        <div class="block-body">
+            <xf:if is="$referrals">
+                <xf:datalist data-xf-init="responsive-data-list">
+                    <xf:foreach loop="$referrals" value="$referral">
+                        <xf:datarow>
+                            <xf:cell class="dataList-cell--main">
+                                <div class="dataList-mainRow">
+                                    <xf:if is="$referral.Inviter"><xf:username user="$referral.Inviter" /><xf:else />Kullanıcı #{$referral.inviter_user_id}</xf:if>
+                                    →
+                                    <xf:if is="$referral.Invited"><xf:username user="$referral.Invited" /><xf:else />Silinmiş kullanıcı</xf:if>
+                                </div>
+                                <div class="dataList-subRow">
+                                    Kod: {$referral.referral_code} · <xf:date time="$referral.created_date" />
+                                    <xf:if is="$referral.risk_reason == 'same_owner_network'"> · Davetçiyle aynı ağ üzerinden kayıt şüphesi
+                                    <xf:elseif is="$referral.risk_reason == 'reused_network'" /> · Aynı ağ üzerinden tekrarlı kayıt şüphesi
+                                    <xf:elseif is="$referral.risk_reason == 'code_suspended'" /> · Kullanılan davet kodu yetkili tarafından askıya alınmış
+                                    </xf:if>
+                                </div>
+                            </xf:cell>
+                            <xf:cell>
+                                <xf:if is="$xf.visitor.user_id != $referral.inviter_user_id">
+                                    <div class="buttonGroup">
+                                        <xf:form action="{{ link('davetler/review-save') }}">
+                                            <input type="hidden" name="referral_id" value="{$referral.referral_id}" />
+                                            <input type="hidden" name="decision" value="valid" />
+                                            <button type="submit" class="button button--primary">Onayla</button>
+                                        </xf:form>
+                                        <xf:form action="{{ link('davetler/review-save') }}">
+                                            <input type="hidden" name="referral_id" value="{$referral.referral_id}" />
+                                            <input type="hidden" name="decision" value="rejected" />
+                                            <button type="submit" class="button button--link">Reddet</button>
+                                        </xf:form>
+                                    </div>
+                                <xf:else />
+                                    <span class="label label--orange">Kendi davetin</span>
+                                </xf:if>
+                            </xf:cell>
+                        </xf:datarow>
+                    </xf:foreach>
+                </xf:datalist>
+            <xf:else />
+                <div class="block-row">İnceleme bekleyen davet bulunmuyor.</div>
+            </xf:if>
+        </div>
+    </div>
+</div>]]></template>
+
+  <template type="admin" title="wrxt_referral_admin_dashboard" version_id="1000102" version_string="1.0.0"><![CDATA[<xf:title>Davet Referans Sistemi</xf:title>
+
+<div class="block">
+    <div class="block-container">
+        <h2 class="block-header">Sistem özeti</h2>
+        <div class="block-outer block-outer--after">
+            <div class="block-outer-opposite buttonGroup">
+                <a href="{{ link('referral-system/invites') }}" class="button button--link">Tüm davet kayıtları</a>
+                <a href="{{ link('referral-system/user') }}" class="button button--link">Kullanıcı detayları</a>
+            </div>
+        </div>
+        <div class="block-body">
+            <div class="block-row">
+                <dl class="pairs pairs--columns"><dt>Toplam kod</dt><dd>{$stats.codes|number}</dd></dl>
+                <dl class="pairs pairs--columns"><dt>Aktif kod</dt><dd>{$stats.active_codes|number}</dd></dl>
+                <dl class="pairs pairs--columns"><dt>Korunan eski kod</dt><dd>{$stats.reserved_codes|number}</dd></dl>
+                <dl class="pairs pairs--columns"><dt>Toplam davet</dt><dd>{$stats.referrals|number}</dd></dl>
+                <dl class="pairs pairs--columns"><dt>Geçerli</dt><dd>{$stats.valid|number}</dd></dl>
+                <dl class="pairs pairs--columns"><dt>Bekleyen</dt><dd>{$stats.pending|number}</dd></dl>
+                <dl class="pairs pairs--columns"><dt>İncelemede</dt><dd>{$stats.review|number}</dd></dl>
+                <dl class="pairs pairs--columns"><dt>Reddedilmiş</dt><dd>{$stats.rejected|number}</dd></dl>
+                <dl class="pairs pairs--columns"><dt>Toplam ödül kaydı</dt><dd>{$stats.rewards|number}</dd></dl>
+                <dl class="pairs pairs--columns"><dt>Teslim edilen ödül</dt><dd>{$stats.rewards_granted|number}</dd></dl>
+                <dl class="pairs pairs--columns"><dt>Geri alınan ödül</dt><dd>{$stats.rewards_revoked|number}</dd></dl>
+                <dl class="pairs pairs--columns"><dt>Ödül hatası</dt><dd>{$stats.rewards_failed|number}</dd></dl>
+                <dl class="pairs pairs--columns"><dt>Kod yönetim kaydı</dt><dd>{$stats.code_changes|number}</dd></dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="block">
+    <div class="block-container">
+        <h2 class="block-header">Ödül hedefleri</h2>
+        <div class="block-outer block-outer--after">
+            <div class="block-outer-opposite"><a href="{{ link('referral-system/milestone-add') }}" class="button button--primary">Yeni ödül hedefi</a></div>
+        </div>
+        <div class="block-body">
+            <xf:if is="$milestones">
+                <xf:datalist data-xf-init="responsive-data-list">
+                    <xf:foreach loop="$milestones" value="$milestone">
+                        <xf:datarow>
+                            <xf:cell class="dataList-cell--main">
+                                <div class="dataList-mainRow"><a href="{{ link('referral-system/milestone-edit', null, {'milestone_id': $milestone.milestone_id}) }}"><strong>{$milestone.required_referrals|number} davet · {$milestone.title}</strong></a></div>
+                                <div class="dataList-subRow">
+                                    {$milestone.description}
+                                    <xf:if is="$milestone.reward_type == 'user_group' AND $milestone.RewardUserGroup"> · Ödül: {$milestone.RewardUserGroup.title}<xf:else /> · Ödül: Görsel ödül</xf:if>
+                                </div>
+                            </xf:cell>
+                            <xf:cell>{{ $milestone.is_active ? 'Aktif' : 'Pasif' }}</xf:cell>
+                            <xf:cell>
+                                <xf:form action="{{ link('referral-system/milestone-delete') }}">
+                                    <input type="hidden" name="milestone_id" value="{$milestone.milestone_id}" />
+                                    <button type="submit" class="button button--link">Sil</button>
+                                </xf:form>
+                            </xf:cell>
+                        </xf:datarow>
+                    </xf:foreach>
+                </xf:datalist>
+            <xf:else />
+                <div class="block-row">Ödül hedefi bulunmuyor.</div>
+            </xf:if>
+        </div>
+    </div>
+</div>
+
+<div class="block">
+    <div class="block-container">
+        <h2 class="block-header">Son kod değişiklikleri</h2>
+        <div class="block-body">
+            <xf:if is="$recentCodeChanges">
+                <xf:datalist data-xf-init="responsive-data-list">
+                    <xf:foreach loop="$recentCodeChanges" value="$change">
+                        <xf:datarow>
+                            <xf:cell class="dataList-cell--main">
+                                <div class="dataList-mainRow"><a href="{{ link('referral-system/user', null, {'user_id': $change.target_user_id}) }}"><strong><xf:if is="$change.target_username">{$change.target_username}<xf:else />Kullanıcı #{$change.target_user_id}</xf:if></strong></a></div>
+                                <div class="dataList-subRow">
+                                    {$change.old_code} → {$change.new_code} · {{ $change.old_active ? 'Aktif' : 'Askıda' }} → {{ $change.new_active ? 'Aktif' : 'Askıda' }}
+                                    <xf:if is="$change.reason"> · {$change.reason}</xf:if>
+                                </div>
+                            </xf:cell>
+                            <xf:cell>
+                                <xf:if is="$change.actor_user_id"><xf:if is="$change.actor_username">{$change.actor_username}<xf:else />Kullanıcı #{$change.actor_user_id}</xf:if><xf:else />Sistem</xf:if>
+                                <div class="u-muted"><xf:date time="$change.log_date" /></div>
+                            </xf:cell>
+                        </xf:datarow>
+                    </xf:foreach>
+                </xf:datalist>
+            <xf:else />
+                <div class="block-row">Henüz kod değişikliği kaydı bulunmuyor.</div>
+            </xf:if>
+        </div>
+    </div>
+</div>
+
+<div class="block">
+    <div class="block-container">
+        <h2 class="block-header">Ödül teslim hataları</h2>
+        <xf:if is="$failedRewards">
+            <div class="block-outer block-outer--after">
+                <div class="block-outer-opposite">
+                    <xf:form action="{{ link('referral-system/retry-failed-rewards') }}"><button type="submit" class="button button--primary">Tümünü yeniden dene</button></xf:form>
+                </div>
+            </div>
+        </xf:if>
+        <div class="block-body">
+            <xf:if is="$failedRewards">
+                <xf:datalist data-xf-init="responsive-data-list">
+                    <xf:foreach loop="$failedRewards" value="$reward">
+                        <xf:datarow>
+                            <xf:cell class="dataList-cell--main">
+                                <div class="dataList-mainRow"><a href="{{ link('referral-system/user', null, {'user_id': $reward.user_id}) }}"><strong>{$reward.reward_title}</strong></a></div>
+                                <div class="dataList-subRow"><xf:if is="$reward.username">{$reward.username}<xf:else />Kullanıcı #{$reward.user_id}</xf:if> · {$reward.milestone_required_referrals|number} geçerli davet · {$reward.attempts|number} deneme</div>
+                            </xf:cell>
+                            <xf:cell>
+                                <xf:if is="$reward.error_code == 'user_group_missing'">Kullanıcı grubu bulunamadı
+                                <xf:elseif is="$reward.error_code == 'unsupported_reward_type'" />Desteklenmeyen ödül türü
+                                <xf:elseif is="$reward.error_code == 'revoke_failed'" />Ödül geri alınamadı
+                                <xf:else />Ödül teslim edilemedi
+                                </xf:if>
+                                <xf:if is="$reward.last_attempt_date"><div class="u-muted"><xf:date time="$reward.last_attempt_date" /></div></xf:if>
+                            </xf:cell>
+                            <xf:cell>
+                                <xf:form action="{{ link('referral-system/retry-reward') }}">
+                                    <input type="hidden" name="reward_id" value="{$reward.reward_id}" />
+                                    <button type="submit" class="button button--link">Tekrar dene</button>
+                                </xf:form>
+                            </xf:cell>
+                        </xf:datarow>
+                    </xf:foreach>
+                </xf:datalist>
+            <xf:else />
+                <div class="block-row">Ödül teslim hatası bulunmuyor.</div>
+            </xf:if>
+        </div>
+    </div>
+</div>]]></template>
+
+  <template type="admin" title="wrxt_referral_admin_invites" version_id="1000102" version_string="1.0.0"><![CDATA[<xf:title>Davet kayıtları</xf:title>
+
+<xf:form action="{{ link('referral-system/invites') }}" method="get" class="block">
+    <div class="block-container">
+        <h2 class="block-header">Filtreler</h2>
+        <div class="block-body">
+            <xf:textboxrow name="inviter_username" value="{$inviterUsername}" label="Davet eden kullanıcı" autocomplete="off" />
+            <xf:textboxrow name="invited_username" value="{$invitedUsername}" label="Davet edilen kullanıcı" autocomplete="off" />
+            <xf:selectrow name="status" value="{$status}" label="Durum">
+                <xf:option value="">Tümü</xf:option>
+                <xf:option value="valid">Geçerli</xf:option>
+                <xf:option value="pending">Bekleyen</xf:option>
+                <xf:option value="review">İncelemede</xf:option>
+                <xf:option value="rejected">Reddedildi</xf:option>
+            </xf:selectrow>
+            <xf:dateinputrow name="date_from" value="{$dateFrom}" label="Başlangıç tarihi" />
+            <xf:dateinputrow name="date_to" value="{$dateTo}" label="Bitiş tarihi" />
+        </div>
+        <xf:submitrow submit="Filtrele" />
+    </div>
+</xf:form>
+
+<div class="block">
+    <div class="block-container">
+        <h2 class="block-header">Kayıtlar · {$total|number}</h2>
+        <div class="block-body">
+            <xf:if is="$referrals">
+                <xf:datalist data-xf-init="responsive-data-list">
+                    <xf:foreach loop="$referrals" value="$referral">
+                        <xf:datarow>
+                            <xf:cell class="dataList-cell--main">
+                                <div class="dataList-mainRow">
+                                    <a href="{{ link('referral-system/user', null, {'user_id': $referral.inviter_user_id}) }}"><strong><xf:if is="$referral.inviter_username">{$referral.inviter_username}<xf:else />Kullanıcı #{$referral.inviter_user_id}</xf:if></strong></a>
+                                    → <xf:if is="$referral.invited_username">{$referral.invited_username}<xf:else />Silinmiş kullanıcı #{$referral.invited_user_id}</xf:if>
+                                </div>
+                                <div class="dataList-subRow">Kod: {$referral.referral_code} · <xf:date time="$referral.created_date" /></div>
+                            </xf:cell>
+                            <xf:cell>
+                                <xf:if is="$referral.status == 'valid'"><span class="label label--green">Geçerli</span>
+                                <xf:elseif is="$referral.status == 'pending'" /><span class="label label--yellow">Bekleyen</span>
+                                <xf:elseif is="$referral.status == 'review'" /><span class="label label--orange">İncelemede</span>
+                                <xf:else /><span class="label label--red">Reddedildi</span>
+                                </xf:if>
+                            </xf:cell>
+                            <xf:cell><xf:if is="$referral.risk_reason">{$referral.risk_reason}<xf:else />—</xf:if></xf:cell>
+                        </xf:datarow>
+                    </xf:foreach>
+                </xf:datalist>
+            <xf:else />
+                <div class="block-row">Filtrelere uygun kayıt bulunamadı.</div>
+            </xf:if>
+        </div>
+        <xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="referral-system/invites" params="{{ {'status': $status, 'inviter_username': $inviterUsername, 'invited_username': $invitedUsername, 'date_from': $dateFrom, 'date_to': $dateTo} }}" wrapperclass="block-outer block-outer--after" />
+    </div>
+</div>]]></template>
+
+  <template type="admin" title="wrxt_referral_admin_user" version_id="1000102" version_string="1.0.0"><![CDATA[<xf:title>Davet kullanıcı detayları</xf:title>
+
+<xf:form action="{{ link('referral-system/user') }}" method="get" class="block">
+    <div class="block-container">
+        <h2 class="block-header">Kullanıcı bul</h2>
+        <div class="block-body"><xf:textboxrow name="username" value="{$username}" label="Kullanıcı adı" autocomplete="off" /></div>
+        <xf:submitrow submit="Görüntüle" />
+    </div>
+</xf:form>
+
+<xf:if is="$user">
+    <div class="block">
+        <div class="block-container">
+            <h2 class="block-header">{$user.username} · Genel durum</h2>
+            <div class="block-body">
+                <div class="block-row">
+                    <dl class="pairs pairs--columns"><dt>Davet kodu</dt><dd><xf:if is="$code">{$code.code}<xf:else />—</xf:if></dd></dl>
+                    <dl class="pairs pairs--columns"><dt>Kod durumu</dt><dd><xf:if is="$code AND $code.is_active">Aktif<xf:else />Askıda</xf:if></dd></dl>
+                    <dl class="pairs pairs--columns"><dt>Korunan kod sayısı</dt><dd>{$reservedCodeCount|number}</dd></dl>
+                    <dl class="pairs pairs--columns"><dt>Toplam davet</dt><dd>{$stats.total|number}</dd></dl>
+                    <dl class="pairs pairs--columns"><dt>Geçerli</dt><dd>{$stats.valid|number}</dd></dl>
+                    <dl class="pairs pairs--columns"><dt>Bekleyen</dt><dd>{$stats.pending|number}</dd></dl>
+                    <dl class="pairs pairs--columns"><dt>İncelemede</dt><dd>{$stats.review|number}</dd></dl>
+                    <dl class="pairs pairs--columns"><dt>Reddedilmiş</dt><dd>{$stats.rejected|number}</dd></dl>
+                </div>
+            </div>
+            <div class="block-footer buttonGroup">
+                <a href="{{ link('referral-system/invites', null, {'inviter_username': $user.username}) }}" class="button button--link">Tüm davet kayıtlarını aç</a>
+                <a href="{{ link('users/edit', $user) }}" class="button button--link">XenForo kullanıcı hesabını aç</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="block-container">
+            <h2 class="block-header">Ödüller</h2>
+            <div class="block-body">
+                <xf:if is="$rewards">
+                    <xf:datalist data-xf-init="responsive-data-list">
+                        <xf:foreach loop="$rewards" value="$reward">
+                            <xf:datarow>
+                                <xf:cell class="dataList-cell--main">
+                                    <div class="dataList-mainRow"><strong>{$reward.reward_title}</strong></div>
+                                    <div class="dataList-subRow">{$reward.milestone_required_referrals|number} geçerli davet · {$reward.attempts|number} deneme</div>
+                                </xf:cell>
+                                <xf:cell>{$reward.status}</xf:cell>
+                                <xf:cell>
+                                    <xf:if is="$reward.status == 'failed'">
+                                        <xf:form action="{{ link('referral-system/retry-reward') }}">
+                                            <input type="hidden" name="reward_id" value="{$reward.reward_id}" />
+                                            <button type="submit" class="button button--link">Tekrar dene</button>
+                                        </xf:form>
+                                    </xf:if>
+                                </xf:cell>
+                            </xf:datarow>
+                        </xf:foreach>
+                    </xf:datalist>
+                <xf:else />
+                    <div class="block-row">Ödül kaydı bulunmuyor.</div>
+                </xf:if>
+            </div>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="block-container">
+            <h2 class="block-header">Son davetler</h2>
+            <div class="block-body">
+                <xf:if is="$referrals">
+                    <xf:datalist data-xf-init="responsive-data-list">
+                        <xf:foreach loop="$referrals" value="$referral">
+                            <xf:datarow>
+                                <xf:cell class="dataList-cell--main">
+                                    <div class="dataList-mainRow"><xf:if is="$referral.Invited"><xf:username user="$referral.Invited" /><xf:else />Silinmiş kullanıcı #{$referral.invited_user_id}</xf:if></div>
+                                    <div class="dataList-subRow">Kod: {$referral.referral_code} · <xf:date time="$referral.created_date" /></div>
+                                </xf:cell>
+                                <xf:cell>{$referral.status}</xf:cell>
+                            </xf:datarow>
+                        </xf:foreach>
+                    </xf:datalist>
+                <xf:else />
+                    <div class="block-row">Davet kaydı bulunmuyor.</div>
+                </xf:if>
+            </div>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="block-container">
+            <h2 class="block-header">Kod işlem geçmişi</h2>
+            <div class="block-body">
+                <xf:if is="$codeLogs">
+                    <xf:datalist data-xf-init="responsive-data-list">
+                        <xf:foreach loop="$codeLogs" value="$change">
+                            <xf:datarow>
+                                <xf:cell class="dataList-cell--main">
+                                    <div class="dataList-mainRow"><strong>{$change.old_code} → {$change.new_code}</strong></div>
+                                    <div class="dataList-subRow">{{ $change.old_active ? 'Aktif' : 'Askıda' }} → {{ $change.new_active ? 'Aktif' : 'Askıda' }}<xf:if is="$change.reason"> · {$change.reason}</xf:if></div>
+                                </xf:cell>
+                                <xf:cell><xf:if is="$change.actor_username">{$change.actor_username}<xf:else />Sistem</xf:if><div class="u-muted"><xf:date time="$change.log_date" /></div></xf:cell>
+                            </xf:datarow>
+                        </xf:foreach>
+                    </xf:datalist>
+                <xf:else />
+                    <div class="block-row">Kod işlem geçmişi bulunmuyor.</div>
+                </xf:if>
+            </div>
+        </div>
+    </div>
+</xf:if>]]></template>
+
+  <template type="admin" title="wrxt_referral_milestone_edit" version_id="1000102" version_string="1.0.0"><![CDATA[<xf:title>{{ $milestone.milestone_id ? 'Ödül hedefini düzenle' : 'Yeni ödül hedefi' }}</xf:title>
+
+<xf:form action="{{ link('referral-system/milestone-save') }}" class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <input type="hidden" name="milestone_id" value="{$milestone.milestone_id}" />
+            <xf:if is="$rewardCount"><div class="blockMessage blockMessage--important">Bu hedef için {$rewardCount|number} teslim edilmiş ödül kaydı var. Gerekli davet sayısı, ödül türü ve hedef kullanıcı grubu artık değiştirilemez.</div></xf:if>
+            <xf:numberboxrow name="required_referrals" value="{$milestone.required_referrals}" min="1" max="100000000" label="Gerekli geçerli davet" />
+            <xf:textboxrow name="title" value="{$milestone.title}" maxlength="100" label="Ödül adı" />
+            <xf:textarearow name="description" value="{$milestone.description}" maxlength="255" label="Açıklama" autosize="true" />
+            <xf:textboxrow name="icon" value="{$milestone.icon}" maxlength="100" label="Font Awesome ikonu" explain="Örnek: fa-gift. Görsel tanımlanırsa ikon yerine görsel gösterilir." />
+            <xf:textboxrow name="image_url" value="{$milestone.image_url}" maxlength="255" label="Ödül görseli" explain="Tam URL veya XenForo içi /data, data/ ya da styles/ yolu." />
+            <xf:selectrow name="reward_type" value="{$milestone.reward_type}" label="Ödül türü">
+                <xf:option value="display">Görsel ödül</xf:option>
+                <xf:option value="user_group">Ek kullanıcı grubu ödülü</xf:option>
+            </xf:selectrow>
+            <xf:selectrow name="reward_user_group_id" value="{$milestone.reward_user_group_id}" label="Ödül kullanıcı grubu" explain="Yalnızca ek kullanıcı grubu ödülü seçildiğinde kullanılır.">
+                <xf:option value="0">Kullanıcı grubu seçilmedi</xf:option>
+                <xf:foreach loop="$userGroups" value="$group"><xf:option value="{$group.user_group_id}">{$group.title}</xf:option></xf:foreach>
+            </xf:selectrow>
+            <xf:selectrow name="revoke_on_loss" value="{$milestone.revoke_on_loss}" label="Şart kaybedilirse ödül">
+                <xf:option value="1">Geri al</xf:option>
+                <xf:option value="0">Kullanıcıda bırak</xf:option>
+            </xf:selectrow>
+            <xf:numberboxrow name="display_order" value="{$milestone.display_order}" min="0" max="1000000" label="Görüntüleme sırası" />
+            <xf:selectrow name="is_active" value="{$milestone.is_active}" label="Durum">
+                <xf:option value="1">Aktif</xf:option>
+                <xf:option value="0">Pasif</xf:option>
+            </xf:selectrow>
+        </div>
+        <xf:submitrow submit="Kaydet" />
+    </div>
+</xf:form>]]></template>
+
+  <template type="public" title="alert_user_wrxt_referral_valid" version_id="1000102" version_string="1.0.0"><![CDATA[Davet ettiğin <strong>{$extra.invitedUsername}</strong> artık geçerli davet olarak sayılıyor. <a href="{{ link('davetler/history') }}" class="fauxBlockLink-blockLink">Davetlerini görüntüle.</a>]]></template>
+  <template type="public" title="alert_user_wrxt_referral_reward_granted" version_id="1000102" version_string="1.0.0"><![CDATA[<a href="{{ link('davetler') }}" class="fauxBlockLink-blockLink"><strong>{$extra.rewardTitle}</strong> davet ödülünü kazandın.</a>]]></template>
+  <template type="public" title="alert_user_wrxt_referral_reward_revoked" version_id="1000102" version_string="1.0.0"><![CDATA[<a href="{{ link('davetler') }}" class="fauxBlockLink-blockLink"><strong>{$extra.rewardTitle}</strong> davet ödülü şartlar artık karşılanmadığı için geri alındı.</a>]]></template>
+
+  <template type="public" title="wrxt_referral.less" version_id="1000102" version_string="1.0.0"><![CDATA[.wrxtReferral-stats
+{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.wrxtReferral-stats > div
+{
+    border: 1px solid @xf-borderColor;
+    border-radius: @xf-borderRadiusMedium;
+    padding: 14px;
+    text-align: center;
+}
+
+.wrxtReferral-stats strong
+{
+    display: block;
+    font-size: 22px;
+}
+
+.wrxtReferral-stats span
+{
+    display: block;
+    margin-top: 4px;
+    color: @xf-textColorMuted;
+}
+
+.wrxtReferral-progressScroller
+{
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 8px 0 4px;
+}
+
+.wrxtReferral-progressMap
+{
+    position: relative;
+    min-width: 680px;
+    height: 122px;
+    margin: 0 34px;
+}
+
+.wrxtReferral-progressTrack
+{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 52px;
+    height: 12px;
+    border-radius: 999px;
+    background: @xf-borderColor;
+}
+
+.wrxtReferral-progressFill
+{
+    height: 100%;
+    border-radius: inherit;
+    background: @xf-linkColor;
+    transition: width .25s ease;
+}
+
+.wrxtReferral-milestoneNode
+{
+    position: absolute;
+    top: 0;
+    width: 120px;
+    transform: translateX(-50%);
+    text-align: center;
+    opacity: .58;
+    z-index: 2;
+}
+
+.wrxtReferral-milestoneNode.is-complete
+{
+    opacity: 1;
+}
+
+.wrxtReferral-milestoneIcon
+{
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 2px solid @xf-borderColor;
+    border-radius: 50%;
+    background: @xf-contentBg;
+}
+
+.wrxtReferral-milestoneNode.is-complete .wrxtReferral-milestoneIcon
+{
+    border-color: @xf-linkColor;
+}
+
+.wrxtReferral-milestoneImage
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.wrxtReferral-milestoneDot
+{
+    display: block;
+    width: 14px;
+    height: 14px;
+    margin: 7px auto 4px;
+    border: 3px solid @xf-contentBg;
+    border-radius: 50%;
+    background: @xf-borderColor;
+    box-shadow: 0 0 0 2px @xf-borderColor;
+}
+
+.wrxtReferral-milestoneNode.is-complete .wrxtReferral-milestoneDot
+{
+    background: @xf-linkColor;
+    box-shadow: 0 0 0 2px @xf-linkColor;
+}
+
+.wrxtReferral-milestoneNode strong,
+.wrxtReferral-milestoneTitle
+{
+    display: block;
+}
+
+.wrxtReferral-milestoneTitle
+{
+    margin-top: 2px;
+    color: @xf-textColorMuted;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wrxtReferral-progressText
+{
+    margin-top: 6px;
+    text-align: center;
+    color: @xf-textColorMuted;
+}
+
+.wrxtReferral-copyGroup
+{
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+}
+
+.wrxtReferral-copyInput
+{
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
+
+.wrxtReferral-copyGroup.is-active .wrxtReferral-copyInput
+{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.wrxtReferral-copyButton
+{
+    flex: 0 0 auto;
+    min-width: 86px;
+    margin-left: -1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.wrxtReferral-shareGrid
+{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 20px;
+    align-items: center;
+}
+
+.wrxtReferral-shareActions
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.wrxtReferral-qrBox
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+}
+
+.wrxtReferral-qrCode
+{
+    display: inline-block;
+    padding: 10px;
+    background: #fff;
+    border-radius: @xf-borderRadiusMedium;
+}
+
+.wrxtReferral-qrCode img
+{
+    display: block;
+    max-width: 180px;
+    height: auto;
+}
+
+@media (max-width: @xf-responsiveMedium)
+{
+    .wrxtReferral-stats
+    {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .wrxtReferral-progressMap
+    {
+        min-width: 620px;
+    }
+
+    .wrxtReferral-copyButton
+    {
+        min-width: 78px;
+    }
+
+    .wrxtReferral-shareGrid
+    {
+        grid-template-columns: 1fr;
+    }
+}
+]]></template>
+</templates>

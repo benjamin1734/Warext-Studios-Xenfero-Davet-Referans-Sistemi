@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cron>
+  <entry entry_id="wrxtRefPending" cron_class="WarextStudios\ReferralSystem\Cron\RefreshPending" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[-1],"minutes":[17]}]]></entry>
+  <entry entry_id="wrxtRefCodes" cron_class="WarextStudios\ReferralSystem\Cron\GenerateCodes" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[4],"minutes":[37]}]]></entry>
+  <entry entry_id="wrxtRefCleanup" cron_class="WarextStudios\ReferralSystem\Cron\Cleanup" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[4],"minutes":[53]}]]></entry>
+  <entry entry_id="wrxtRefRevalidate" cron_class="WarextStudios\ReferralSystem\Cron\RevalidateValid" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[5],"minutes":[11]}]]></entry>
+  <entry entry_id="wrxtRefRewards" cron_class="WarextStudios\ReferralSystem\Cron\ReconcileRewards" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[5],"minutes":[27]}]]></entry>
+</cron>

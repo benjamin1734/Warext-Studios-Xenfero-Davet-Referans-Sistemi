@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="account_visitor_menu" modification_key="wrxt_ref_account" description="Davet merkezini kullanıcı menüsüne ekler" execution_order="10" enabled="1" action="str_replace">
+    <find>&lt;!--[XF:account_links:top]--&gt;</find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.options.wrxtReferralEnabled">
+<li><a href="{{ link('davetler') }}" class="menu-linkRow">{{ phrase('wrxt_referral_nav_invites') }}</a></li>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="register_form" modification_key="wrxt_ref_register" description="Kayıt formuna davet kodu alanı ekler" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:captcharow\b[^>]*context="xf_register"[^>]*/>#s]]></find>
+    <replace><![CDATA[<xf:if is="$xf.options.wrxtReferralEnabled">
+<xf:textboxrow name="wrxt_referral_code"
+    value="{{ $xf.app.request.get('ref') ?: $xf.app.request.getCookie('wrxt_referral') }}"
+    maxlength="24"
+    autocomplete="off"
+    label="{{ phrase('wrxt_referral_invite_code') }}"
+    explain="{{ phrase('wrxt_referral_invite_code_explain') }}" />
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="wrxt_referral_dashboard" modification_key="wrxt_ref_progress_fill" description="Davet ilerleme çubuğunu reddedilmemiş davetlere göre doldurur" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="wrxtReferral-progressFill" style="width: {$progress.percent}%;"></div>]]></find>
+    <replace><![CDATA[<div class="wrxtReferral-progressFill" style="width: {{ $progress.highest ? min(100, (($stats.total - $stats.rejected) / $progress.highest) * 100) : 0 }}%;"></div>]]></replace>
+  </modification>
+  <modification type="public" template="wrxt_referral_dashboard" modification_key="wrxt_ref_icons_23" description="Ödül hedefi ikonlarını XenForo 2.3 ikon sistemiyle gösterir" execution_order="20" enabled="1" action="str_replace">
+    <find><![CDATA[<i class="fa {$milestone.icon}" aria-hidden="true"></i>]]></find>
+    <replace><![CDATA[<xf:fa icon="{$milestone.icon}" aria-hidden="true" />]]></replace>
+  </modification>
+  <modification type="admin" template="wrxt_referral_milestone_edit" modification_key="wrxt_ref_upload_form" description="Ödül hedefi formunda görsel yüklemeyi etkinleştirir" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:form action="{{ link('referral-system/milestone-save') }}" class="block">]]></find>
+    <replace><![CDATA[<xf:form action="{{ link('referral-system/milestone-save') }}" upload="true" class="block">]]></replace>
+  </modification>
+  <modification type="admin" template="wrxt_referral_milestone_edit" modification_key="wrxt_ref_upload_field" description="Ödül hedeflerine sürükle bırak görsel yükleme alanı ekler" execution_order="20" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:textboxrow name="image_url" value="{$milestone.image_url}" maxlength="255" label="Ödül görseli" explain="Tam URL veya XenForo içi /data, data/ ya da styles/ yolu." />]]></find>
+    <replace><![CDATA[<xf:js src="warext/referral/milestone-upload.js" />
+<div class="formRow">
+    <div class="formRow-labelWrapper">
+        <label class="formRow-label" for="js-wrxtReferralUploadInput">Ödül görseli yükle</label>
+    </div>
+    <div class="formRow-main">
+        <label class="js-wrxtReferralUploadDrop" for="js-wrxtReferralUploadInput" style="display:flex;min-height:150px;align-items:center;justify-content:center;flex-direction:column;gap:8px;border:2px dashed currentColor;border-radius:8px;padding:20px;text-align:center;cursor:pointer;">
+            <xf:fa icon="fa-cloud-upload-alt" aria-hidden="true" />
+            <strong>Görseli buraya sürükle veya seçmek için tıkla</strong>
+            <span class="js-wrxtReferralUploadName u-muted">PNG, JPG, GIF veya WEBP</span>
+            <input id="js-wrxtReferralUploadInput" class="js-wrxtReferralUploadInput" type="file" name="reward_image" accept=".gif,.jpeg,.jpg,.jpe,.png,.webp" style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;" />
+        </label>
+        <div class="js-wrxtReferralUploadPreview" style="margin-top:10px;"></div>
+        <div class="formRow-explain">Yeni bir görsel yüklenirse aşağıdaki harici adresin yerine kullanılır.</div>
+    </div>
+</div>
+<xf:textboxrow name="image_url" value="{$milestone.image_url}" maxlength="255" label="Harici ödül görseli" explain="İstersen dosya yüklemek yerine tam URL veya XenForo içi /data, data/ ya da styles/ yolu kullanabilirsin." />
+<xf:if is="$milestone.image_url">
+    <xf:formrow label="Mevcut görsel">
+        <img src="{$milestone.image_url}" alt="" style="display:block;max-width:120px;max-height:120px;border-radius:8px;" />
+    </xf:formrow>
+</xf:if>]]></replace>
+  </modification>
+</template_modifications>

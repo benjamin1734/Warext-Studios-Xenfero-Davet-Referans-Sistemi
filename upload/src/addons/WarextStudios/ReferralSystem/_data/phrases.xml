@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.wrxtReferralSystem" version_id="1000104" version_string="1.0.0">Davet Referans Sistemi</phrase>
+  <phrase title="admin_navigation.wrxtRefOverview" version_id="1000104" version_string="1.0.0">Genel Bakış</phrase>
+  <phrase title="admin_navigation.wrxtRefInvites" version_id="1000104" version_string="1.0.0">Davet Kayıtları</phrase>
+  <phrase title="admin_navigation.wrxtRefUsers" version_id="1000104" version_string="1.0.0">Kullanıcı Detayları</phrase>
+  <phrase title="admin_navigation.wrxtRefOptions" version_id="1000104" version_string="1.0.0">Ayarlar</phrase>
+  <phrase title="nav.wrxtRefNav" version_id="1000104" version_string="1.0.0">Davetlerim</phrase>
+  <phrase title="cron_entry.wrxtRefPending" version_id="1000102" version_string="1.0.0">Bekleyen davetleri doğrula</phrase>
+  <phrase title="cron_entry.wrxtRefRevalidate" version_id="1000102" version_string="1.0.0">Geçerli davetleri yeniden doğrula</phrase>
+  <phrase title="cron_entry.wrxtRefCodes" version_id="1000102" version_string="1.0.0">Eksik kullanıcı davet kodlarını tamamla</phrase>
+  <phrase title="cron_entry.wrxtRefCleanup" version_id="1000102" version_string="1.0.0">Eski ağ kontrol kayıtlarını temizle</phrase>
+  <phrase title="cron_entry.wrxtRefRewards" version_id="1000102" version_string="1.0.0">Davet ödüllerini yeniden hesapla</phrase>
+  <phrase title="option_group.wrxtReferral" version_id="1000102" version_string="1.0.0">Warext Studios - Davet Referans Sistemi</phrase>
+  <phrase title="option.wrxtReferralEnabled" version_id="1000102" version_string="1.0.0">Davet referans sistemi aktif</phrase>
+  <phrase title="option_explain.wrxtReferralEnabled" version_id="1000102" version_string="1.0.0">Kapatıldığında kullanıcı davet sayfası, davet bağlantıları ve kayıt sırasında davet ilişkilendirmesi devre dışı bırakılır. Mevcut veriler silinmez.</phrase>
+  <phrase title="option.wrxtReferralCookieDays" version_id="1000102" version_string="1.0.0">Davet bağlantısı geçerlilik süresi</phrase>
+  <phrase title="option.wrxtReferralMinDays" version_id="1000102" version_string="1.0.0">Geçerli davet için minimum hesap yaşı</phrase>
+  <phrase title="option.wrxtReferralMinMessages" version_id="1000102" version_string="1.0.0">Geçerli davet için minimum mesaj sayısı</phrase>
+  <phrase title="option.wrxtReferralShowList" version_id="1000102" version_string="1.0.0">Kullanıcıya davet ettiği hesapları göster</phrase>
+  <phrase title="option.wrxtReferralIpHashRetentionDays" version_id="1000102" version_string="1.0.0">Ağ kontrol verisi saklama süresi</phrase>
+  <phrase title="option_explain.wrxtReferralIpHashRetentionDays" version_id="1000102" version_string="1.0.0">Kötüye kullanım kontrolünde kullanılan tek yönlü ağ kontrol değerlerinin ne kadar süre tutulacağını belirler. Ham IP adresi saklanmaz.</phrase>
+  <phrase title="permission.wrxtReferral_manageCodes" version_id="1000102" version_string="1.0.0">Kullanıcı davet kodlarını değiştirebilir veya askıya alabilir</phrase>
+  <phrase title="permission.wrxtReferral_reviewReferrals" version_id="1000102" version_string="1.0.0">Şüpheli davetleri inceleyebilir</phrase>
+  <phrase title="wrxt_referral_dashboard" version_id="1000102" version_string="1.0.0">Davetlerim</phrase>
+  <phrase title="wrxt_referral_manage" version_id="1000102" version_string="1.0.0">Davet Kodu Yönetimi</phrase>
+  <phrase title="wrxt_referral_review" version_id="1000102" version_string="1.0.0">Şüpheli Davet İnceleme</phrase>
+  <phrase title="wrxt_referral_nav_invites" version_id="1000102" version_string="1.0.0">Davetlerim</phrase>
+  <phrase title="wrxt_referral_invite_code" version_id="1000102" version_string="1.0.0">Davet kodu</phrase>
+  <phrase title="wrxt_referral_invite_code_explain" version_id="1000102" version_string="1.0.0">Bir kullanıcı tarafından davet edildiyseniz kişisel davet kodunu buraya girebilirsiniz.</phrase>
+  <phrase title="wrxt_referral_error_disabled" version_id="1000102" version_string="1.0.0">Davet referans sistemi şu anda devre dışı.</phrase>
+  <phrase title="wrxt_referral_error_code_invalid" version_id="1000102" version_string="1.0.0">Davet kodu geçersiz, askıya alınmış veya artık kullanılamıyor.</phrase>
+  <phrase title="wrxt_referral_error_code_reserved" version_id="1000102" version_string="1.0.0">Bu davet kodu daha önce başka bir kullanıcıya atanmış veya rezerve edilmiş.</phrase>
+  <phrase title="wrxt_referral_error_code_format" version_id="1000102" version_string="1.0.0">Davet kodu 6 ile 24 karakter arasında yalnızca harf ve rakam içermelidir.</phrase>
+  <phrase title="wrxt_referral_error_suspension_reason_required" version_id="1000102" version_string="1.0.0">Davet kodunu askıya almak için neden belirtmelisiniz.</phrase>
+  <phrase title="wrxt_referral_error_no_permission" version_id="1000102" version_string="1.0.0">Bu işlem için yetkiniz yok.</phrase>
+  <phrase title="wrxt_referral_error_code_missing" version_id="1000102" version_string="1.0.0">Davet kodu bulunamadı.</phrase>
+  <phrase title="wrxt_referral_error_reward_group_in_use" version_id="1000102" version_string="1.0.0">Bu kullanıcı grubu bir davet ödül hedefinde kullanıldığı için silinemez. Önce ilgili ödül hedefini düzenleyin.</phrase>
+  <phrase title="wrxt_referral_error_inviter_unavailable" version_id="1000102" version_string="1.0.0">Davet sistemi yalnızca geçerli ve yasaklanmamış hesaplar tarafından kullanılabilir.</phrase>
+  <phrase title="wrxt_referral_error_code_create_failed" version_id="1000102" version_string="1.0.0">Davet kodu oluşturulamadı.</phrase>
+  <phrase title="wrxt_referral_error_self_link" version_id="1000102" version_string="1.0.0">Kendi davet bağlantınızı kullanamazsınız.</phrase>
+  <phrase title="wrxt_referral_error_user_not_found" version_id="1000102" version_string="1.0.0">Kullanıcı bulunamadı.</phrase>
+  <phrase title="wrxt_referral_error_review_decision" version_id="1000102" version_string="1.0.0">Geçersiz inceleme kararı.</phrase>
+  <phrase title="wrxt_referral_error_referral_not_found" version_id="1000102" version_string="1.0.0">İncelenecek davet bulunamadı.</phrase>
+  <phrase title="wrxt_referral_error_referral_not_pending_review" version_id="1000102" version_string="1.0.0">Bu davet daha önce incelenmiş veya artık inceleme beklemiyor.</phrase>
+  <phrase title="wrxt_referral_error_self_review" version_id="1000102" version_string="1.0.0">Kendi davet kaydınızı inceleyemezsiniz.</phrase>
+  <phrase title="wrxt_referral_error_inviter_invalid" version_id="1000102" version_string="1.0.0">Davetçi hesabı geçerli durumda değil.</phrase>
+  <phrase title="wrxt_referral_error_invitee_requirements" version_id="1000102" version_string="1.0.0">Bu kullanıcı henüz geçerli davet koşullarını karşılamıyor.</phrase>
+  <phrase title="wrxt_referral_error_suspended_review" version_id="1000102" version_string="1.0.0">Bu davette kullanılan kod hâlen askıda veya artık aktif kod değil.</phrase>
+  <phrase title="wrxt_referral_error_reward_title_required" version_id="1000102" version_string="1.0.0">Ödül adı boş bırakılamaz.</phrase>
+  <phrase title="wrxt_referral_error_icon_invalid" version_id="1000102" version_string="1.0.0">İkon sınıfı geçersiz karakter içeriyor.</phrase>
+  <phrase title="wrxt_referral_error_image_invalid" version_id="1000102" version_string="1.0.0">Ödül görseli geçerli bir URL veya XenForo içi yol olmalıdır.</phrase>
+  <phrase title="wrxt_referral_error_reward_type_invalid" version_id="1000102" version_string="1.0.0">Geçersiz ödül türü.</phrase>
+  <phrase title="wrxt_referral_error_reward_group_required" version_id="1000102" version_string="1.0.0">Ek kullanıcı grubu ödülü için geçerli bir kullanıcı grubu seçilmelidir.</phrase>
+  <phrase title="wrxt_referral_error_threshold_duplicate" version_id="1000102" version_string="1.0.0">Bu davet sayısı için zaten bir ödül hedefi bulunuyor.</phrase>
+  <phrase title="wrxt_referral_error_reward_history_locked" version_id="1000102" version_string="1.0.0">Teslim edilmiş ödül geçmişi bulunan bir hedefin gerekli davet sayısı, ödül türü veya kullanıcı grubu değiştirilemez. Hedefi pasife alıp yeni bir hedef oluşturun.</phrase>
+  <phrase title="wrxt_referral_error_reward_history_delete" version_id="1000102" version_string="1.0.0">Bu hedefe bağlı teslim edilmiş ödül geçmişi bulunduğu için silinemez. Bunun yerine hedefi pasife alın.</phrase>
+</phrases>

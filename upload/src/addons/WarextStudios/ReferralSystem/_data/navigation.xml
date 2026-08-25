@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation>
+  <navigation_entry navigation_id="wrxtRefNav" display_order="650" navigation_type_id="basic" enabled="1"><![CDATA[{"link":"{{ link('davetler') }}","display_condition":"{$xf.visitor.user_id} AND {$xf.options.wrxtReferralEnabled}","extra_attributes":{"icon":"user-plus"}}]]></navigation_entry>
+</navigation>

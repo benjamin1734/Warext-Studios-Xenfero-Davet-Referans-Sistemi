@@ -1,0 +1,22 @@
+{
+    "title": "Warext Studios - Davet Referans Sistemi",
+    "description": "XenForo için açık kaynak davet, referans ve ödül sistemi.",
+    "version_id": 1000108,
+    "version_string": "1.0.0",
+    "dev": "Warext Studios",
+    "dev_url": "",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": {
+        "XF": [
+            2030000,
+            "XenForo 2.3.0+"
+        ],
+        "php": [
+            "8.1.0",
+            "PHP 8.1.0+"
+        ]
+    },
+    "icon": "fa-user-plus"
+}

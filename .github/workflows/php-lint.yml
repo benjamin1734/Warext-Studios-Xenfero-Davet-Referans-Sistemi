@@ -1,0 +1,189 @@
+name: Eklenti Doğrulama
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  php-lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php:
+          - '8.1'
+          - '8.2'
+          - '8.3'
+          - '8.4'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+      - run: find upload -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+      - run: |
+          php <<'PHP'
+          <?php
+          $root = 'upload/src/addons/WarextStudios/ReferralSystem';
+          $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root));
+          $violations = [];
+          foreach ($iterator as $file)
+          {
+              if (!$file->isFile() || strtolower($file->getExtension()) !== 'php')
+              {
+                  continue;
+              }
+              $code = file_get_contents($file->getPathname());
+              foreach (token_get_all($code) as $token)
+              {
+                  if (is_array($token) && ($token[0] === T_COMMENT || $token[0] === T_DOC_COMMENT))
+                  {
+                      $violations[] = $file->getPathname() . ':' . $token[2];
+                  }
+              }
+          }
+          if ($violations)
+          {
+              fwrite(STDERR, "PHP kaynaklarında yorum kullanılamaz:\n" . implode("\n", $violations) . "\n");
+              exit(1);
+          }
+          PHP
+
+  metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m json.tool upload/src/addons/WarextStudios/ReferralSystem/addon.json > /dev/null
+      - run: |
+          python - <<'PY'
+          import glob
+          import json
+          import os
+          import xml.etree.ElementTree as ET
+
+          root = 'upload/src/addons/WarextStudios/ReferralSystem'
+
+          with open(f'{root}/addon.json', encoding='utf-8') as f:
+              addon = json.load(f)
+
+          parsed = {}
+          for path in glob.glob(f'{root}/_data/*.xml'):
+              parsed[path] = ET.parse(path)
+              print(path)
+
+          if addon['version_id'] < 1000108 or addon['version_string'] != '1.0.0':
+              raise SystemExit('V1 sürüm bilgisi beklenen değerde değil')
+
+          limit_checks = [
+              ('cron.xml', './/entry', ['entry_id']),
+              ('template_modifications.xml', './/modification', ['modification_key']),
+              ('permissions.xml', './/permission', ['permission_group_id', 'permission_id', 'interface_group_id']),
+              ('admin_navigation.xml', './/admin_navigation_entry', ['navigation_id', 'parent_navigation_id', 'admin_permission_id']),
+              ('navigation.xml', './/navigation_entry', ['navigation_id', 'parent_navigation_id']),
+              ('routes.xml', './/route', ['route_prefix', 'context']),
+              ('option_groups.xml', './/group', ['group_id'])
+          ]
+
+          limit_errors = []
+          for filename, selector, attributes in limit_checks:
+              path = f'{root}/_data/{filename}'
+              tree = parsed.get(path) or ET.parse(path)
+              for element in tree.findall(selector):
+                  for attribute in attributes:
+                      value = element.attrib.get(attribute, '')
+                      if value and len(value) > 25:
+                          limit_errors.append(f'{filename}: {attribute}={value} ({len(value)})')
+
+          if limit_errors:
+              raise SystemExit('XenForo 25 karakter kimlik sınırı aşıldı:\n' + '\n'.join(limit_errors))
+
+          admin_navigation = parsed[f'{root}/_data/admin_navigation.xml'].getroot()
+          admin_ids = {entry.attrib.get('navigation_id', '') for entry in admin_navigation.findall('.//admin_navigation_entry')}
+          required_admin_ids = {'wrxtReferralSystem', 'wrxtRefOverview', 'wrxtRefInvites', 'wrxtRefUsers', 'wrxtRefOptions'}
+          if not required_admin_ids.issubset(admin_ids):
+              raise SystemExit('Davet sistemi yönetici alt menüsü eksik')
+
+          navigation = parsed[f'{root}/_data/navigation.xml'].getroot()
+          public_ids = {entry.attrib.get('navigation_id', '') for entry in navigation.findall('.//navigation_entry')}
+          if 'wrxtRefNav' not in public_ids:
+              raise SystemExit('Davetlerim kullanıcı navigasyonu eksik')
+
+          required = [
+              f'{root}/Setup.php',
+              f'{root}/Repository/Referral.php',
+              f'{root}/Service/CodeManager.php',
+              f'{root}/Service/ReviewManager.php',
+              f'{root}/Service/RewardManager.php',
+              f'{root}/Service/NotificationManager.php',
+              f'{root}/Entity/Referral.php',
+              f'{root}/Entity/Reward.php',
+              f'{root}/Entity/ReferralCode.php',
+              f'{root}/XF/Entity/UserGroup.php',
+              f'{root}/Job/ReconcileRewards.php',
+              f'{root}/Job/CleanupOwnerHashes.php',
+              f'{root}/Cron/ReconcileRewards.php',
+              f'{root}/Admin/Controller/ReferralCompat.php',
+              'upload/js/warext/referral/milestone-upload.js'
+          ]
+          missing = [path for path in required if not os.path.isfile(path)]
+          if missing:
+              raise SystemExit('Zorunlu dosyalar eksik:\n' + '\n'.join(missing))
+
+          with open(f'{root}/Setup.php', encoding='utf-8') as f:
+              setup = f.read()
+
+          if 'upgrade1000040Step1' not in setup or 'xf_wrxt_referral_code_reservation' not in setup:
+              raise SystemExit('0.4.0 kod rezervasyonu yükseltmesi eksik')
+          if 'upgrade1000041Step1' not in setup or 'owner_ip_hash_date' not in setup:
+              raise SystemExit('0.4.1 ağ verisi gizlilik yükseltmesi eksik')
+          if 'upgrade1000100Step1' not in setup:
+              raise SystemExit('V1 bakım yükseltmesi eksik')
+
+          with open(f'{root}/_data/templates.xml', encoding='utf-8') as f:
+              templates = f.read()
+
+          required_templates = [
+              'wrxtReferral-copyGroup',
+              'wrxt_referral_history',
+              'wrxt_referral_admin_invites',
+              'wrxt_referral_admin_user',
+              'alert_user_wrxt_referral_valid',
+              'alert_user_wrxt_referral_reward_granted',
+              'alert_user_wrxt_referral_reward_revoked',
+              'vendor/kjua/kjua.min.js',
+              'responsive-data-list',
+              'Korunan eski kod'
+          ]
+          missing_templates = [value for value in required_templates if value not in templates]
+          if missing_templates:
+              raise SystemExit('V1 şablonları eksik:\n' + '\n'.join(missing_templates))
+          if 'responsive-datalist' in templates:
+              raise SystemExit('Geçersiz XenForo responsive data list başlatıcısı bulundu')
+          if '<xf:main' in templates or '<xf:explain' in templates:
+              raise SystemExit('XenForo 2.3 ile uyumsuz veri listesi şablon yapısı bulundu')
+
+          modifications = parsed[f'{root}/_data/template_modifications.xml'].getroot()
+          modification_keys = {entry.attrib.get('modification_key', '') for entry in modifications.findall('.//modification')}
+          required_modifications = {'wrxt_ref_progress_fill', 'wrxt_ref_icons_23', 'wrxt_ref_upload_form', 'wrxt_ref_upload_field'}
+          if not required_modifications.issubset(modification_keys):
+              raise SystemExit('İlerleme, ikon veya görsel yükleme şablon düzenlemeleri eksik')
+
+          with open(f'{root}/Admin/Controller/ReferralCompat.php', encoding='utf-8') as f:
+              admin_compat = f.read()
+          if "getFile('reward_image'" not in admin_compat or 'copyFileToAbstractedPath' not in admin_compat or 'applyExternalDataUrl' not in admin_compat:
+              raise SystemExit('Ödül görseli yükleme işlemi eksik')
+
+          with open(f'{root}/Repository/Referral.php', encoding='utf-8') as f:
+              repository = f.read()
+          if '$this->app' in repository:
+              raise SystemExit('Repository içinde geçersiz $this->app kullanımı bulundu')
+
+          with open('upload/js/warext/referral/milestone-upload.js', encoding='utf-8') as f:
+              upload_js = f.read()
+          if 'DataTransfer' not in upload_js or 'dragover' not in upload_js or 'readAsDataURL' not in upload_js:
+              raise SystemExit('Sürükle bırak görsel yükleme arayüzü eksik')
+          PY
