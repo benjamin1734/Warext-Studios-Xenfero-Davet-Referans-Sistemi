@@ -27,6 +27,282 @@ $0]]></replace>
     <find><![CDATA[<i class="fa {$milestone.icon}" aria-hidden="true"></i>]]></find>
     <replace><![CDATA[<xf:fa icon="{$milestone.icon}" aria-hidden="true" />]]></replace>
   </modification>
+  <modification type="public" template="wrxt_referral.less" modification_key="wrxt_ref_layout_102" description="Davetlerim sayfasını kaydırmasız, sabit genişlikli ve mobil uyumlu hale getirir" execution_order="100" enabled="1" action="preg_replace">
+    <find><![CDATA[#\z#]]></find>
+    <replace><![CDATA[
+
+.wrxtReferral-stats
+{
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.wrxtReferral-stats > div
+{
+    padding: 16px 10px;
+    border-radius: 12px;
+    background: @xf-contentAltBg;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .04);
+}
+
+.wrxtReferral-stats > div:nth-child(2)
+{
+    border-color: @xf-linkColor;
+}
+
+.wrxtReferral-stats strong
+{
+    font-size: 24px;
+    line-height: 1.1;
+}
+
+.wrxtReferral-progressScroller
+{
+    overflow: visible;
+    padding: 14px 0 8px;
+}
+
+.wrxtReferral-progressMap
+{
+    width: auto;
+    min-width: 0;
+    height: 128px;
+    margin: 0 46px;
+}
+
+.wrxtReferral-progressTrack
+{
+    top: 56px;
+    height: 10px;
+}
+
+.wrxtReferral-milestoneNode
+{
+    width: 92px;
+}
+
+.wrxtReferral-milestoneIcon
+{
+    width: 42px;
+    height: 42px;
+    border-width: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+}
+
+.wrxtReferral-milestoneDot
+{
+    margin-top: 8px;
+}
+
+.wrxtReferral-milestoneNode strong
+{
+    font-size: 13px;
+    line-height: 1.2;
+}
+
+.wrxtReferral-milestoneTitle
+{
+    margin-top: 3px;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.wrxtReferral-progressText
+{
+    margin-top: 10px;
+    padding: 9px 12px;
+    border: 1px solid @xf-borderColor;
+    border-radius: 9px;
+    background: @xf-contentAltBg;
+}
+
+.wrxtReferral-copyGroup
+{
+    gap: 6px;
+    padding: 5px;
+    border: 1px solid @xf-borderColor;
+    border-radius: 10px;
+    background: @xf-contentAltBg;
+}
+
+.wrxtReferral-copyInput,
+.wrxtReferral-copyGroup.is-active .wrxtReferral-copyInput
+{
+    border: 0;
+    border-radius: 7px;
+    background: @xf-contentBg;
+    box-shadow: none;
+}
+
+.wrxtReferral-copyButton
+{
+    min-width: 88px;
+    margin-left: 0;
+    border-radius: 7px;
+}
+
+.wrxtReferral-shareGrid
+{
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid @xf-borderColor;
+    border-radius: 12px;
+    background: @xf-contentAltBg;
+}
+
+.wrxtReferral-shareActions
+{
+    gap: 8px;
+}
+
+.wrxtReferral-shareActions .button
+{
+    flex: 1 1 150px;
+    justify-content: center;
+}
+
+.wrxtReferral-qrBox
+{
+    padding-left: 16px;
+    border-left: 1px solid @xf-borderColor;
+}
+
+.wrxtReferral-qrCode
+{
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+}
+
+@media (max-width: @xf-responsiveMedium)
+{
+    .wrxtReferral-stats
+    {
+        gap: 8px;
+        margin-bottom: 18px;
+    }
+
+    .wrxtReferral-stats > div
+    {
+        padding: 13px 6px;
+    }
+
+    .wrxtReferral-stats strong
+    {
+        font-size: 20px;
+    }
+
+    .wrxtReferral-stats span
+    {
+        font-size: 12px;
+    }
+
+    .wrxtReferral-progressScroller
+    {
+        overflow: visible;
+        padding: 10px 0 6px;
+    }
+
+    .wrxtReferral-progressMap
+    {
+        width: auto;
+        min-width: 0;
+        height: 118px;
+        margin: 0 34px;
+    }
+
+    .wrxtReferral-progressTrack
+    {
+        top: 48px;
+        height: 8px;
+    }
+
+    .wrxtReferral-milestoneNode
+    {
+        width: 68px;
+        font-size: 11px;
+    }
+
+    .wrxtReferral-milestoneIcon
+    {
+        width: 34px;
+        height: 34px;
+    }
+
+    .wrxtReferral-milestoneDot
+    {
+        width: 12px;
+        height: 12px;
+        margin: 6px auto 3px;
+        border-width: 2px;
+    }
+
+    .wrxtReferral-milestoneNode strong
+    {
+        font-size: 12px;
+    }
+
+    .wrxtReferral-milestoneTitle
+    {
+        font-size: 10px;
+        line-height: 1.15;
+    }
+
+    .wrxtReferral-progressText
+    {
+        font-size: 12px;
+        line-height: 1.35;
+    }
+
+    .wrxtReferral-copyGroup
+    {
+        gap: 4px;
+        padding: 4px;
+    }
+
+    .wrxtReferral-copyButton
+    {
+        min-width: 72px;
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+
+    .wrxtReferral-shareGrid
+    {
+        padding: 12px;
+    }
+
+    .wrxtReferral-qrBox
+    {
+        padding: 14px 0 0;
+        border-left: 0;
+        border-top: 1px solid @xf-borderColor;
+    }
+}
+
+@media (max-width: 420px)
+{
+    .wrxtReferral-progressMap
+    {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    .wrxtReferral-milestoneNode
+    {
+        width: 60px;
+    }
+
+    .wrxtReferral-milestoneTitle
+    {
+        font-size: 9px;
+    }
+}
+]]></replace>
+  </modification>
   <modification type="admin" template="wrxt_referral_milestone_edit" modification_key="wrxt_ref_upload_form" description="Ödül hedefi formunda görsel yüklemeyi etkinleştirir" execution_order="10" enabled="1" action="str_replace">
     <find><![CDATA[<xf:form action="{{ link('referral-system/milestone-save') }}" class="block">]]></find>
     <replace><![CDATA[<xf:form action="{{ link('referral-system/milestone-save') }}" upload="true" class="block">]]></replace>
