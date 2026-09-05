@@ -75,8 +75,8 @@ jobs:
               parsed[path] = ET.parse(path)
               print(path)
 
-          if addon['version_id'] < 1000108 or addon['version_string'] != '1.0.0':
-              raise SystemExit('V1 sürüm bilgisi beklenen değerde değil')
+          if addon['version_id'] < 1000109 or addon['version_string'] != '1.0.1':
+              raise SystemExit('1.0.1 sürüm bilgisi beklenen değerde değil')
 
           limit_checks = [
               ('cron.xml', './/entry', ['entry_id']),
@@ -108,9 +108,11 @@ jobs:
               raise SystemExit('Davet sistemi yönetici alt menüsü eksik')
 
           navigation = parsed[f'{root}/_data/navigation.xml'].getroot()
-          public_ids = {entry.attrib.get('navigation_id', '') for entry in navigation.findall('.//navigation_entry')}
-          if 'wrxtRefNav' not in public_ids:
-              raise SystemExit('Davetlerim kullanıcı navigasyonu eksik')
+          public_entries = {entry.attrib.get('navigation_id', ''): entry for entry in navigation.findall('.//navigation_entry')}
+          if 'wrxtRefNav' not in public_entries:
+              raise SystemExit('Davetlerim navigasyon kaydı eksik')
+          if public_entries['wrxtRefNav'].attrib.get('enabled') != '0':
+              raise SystemExit('Davetlerim üst navbar kaydı devre dışı olmalı')
 
           required = [
               f'{root}/Setup.php',
@@ -168,9 +170,16 @@ jobs:
 
           modifications = parsed[f'{root}/_data/template_modifications.xml'].getroot()
           modification_keys = {entry.attrib.get('modification_key', '') for entry in modifications.findall('.//modification')}
-          required_modifications = {'wrxt_ref_progress_fill', 'wrxt_ref_icons_23', 'wrxt_ref_upload_form', 'wrxt_ref_upload_field'}
+          required_modifications = {'wrxt_ref_account', 'wrxt_ref_progress_fill', 'wrxt_ref_icons_23', 'wrxt_ref_upload_form', 'wrxt_ref_upload_field'}
           if not required_modifications.issubset(modification_keys):
-              raise SystemExit('İlerleme, ikon veya görsel yükleme şablon düzenlemeleri eksik')
+              raise SystemExit('Hesap menüsü veya diğer zorunlu şablon düzenlemeleri eksik')
+
+          account_mod = next((entry for entry in modifications.findall('.//modification') if entry.attrib.get('modification_key') == 'wrxt_ref_account'), None)
+          if account_mod is None:
+              raise SystemExit('Davetlerim hesap menüsü düzenlemesi eksik')
+          account_find = account_mod.find('find')
+          if account_find is None or "account/preferences" not in (account_find.text or ''):
+              raise SystemExit('Davetlerim bağlantısı Tercihler satırına bağlı değil')
 
           with open(f'{root}/Admin/Controller/ReferralCompat.php', encoding='utf-8') as f:
               admin_compat = f.read()
