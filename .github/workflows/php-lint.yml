@@ -170,7 +170,7 @@ jobs:
 
           modifications = parsed[f'{root}/_data/template_modifications.xml'].getroot()
           modification_keys = {entry.attrib.get('modification_key', '') for entry in modifications.findall('.//modification')}
-          required_modifications = {'wrxt_ref_account', 'wrxt_ref_progress_fill', 'wrxt_ref_icons_23', 'wrxt_ref_upload_form', 'wrxt_ref_upload_field'}
+          required_modifications = {'wrxt_ref_account', 'wrxt_ref_progress_fill', 'wrxt_ref_icons_23', 'wrxt_ref_layout_102', 'wrxt_ref_upload_form', 'wrxt_ref_upload_field'}
           if not required_modifications.issubset(modification_keys):
               raise SystemExit('Hesap menüsü veya diğer zorunlu şablon düzenlemeleri eksik')
 
@@ -180,6 +180,14 @@ jobs:
           account_find = account_mod.find('find')
           if account_find is None or "account/preferences" not in (account_find.text or ''):
               raise SystemExit('Davetlerim bağlantısı Tercihler satırına bağlı değil')
+
+          layout_mod = next((entry for entry in modifications.findall('.//modification') if entry.attrib.get('modification_key') == 'wrxt_ref_layout_102'), None)
+          if layout_mod is None or layout_mod.attrib.get('template') != 'wrxt_referral.less':
+              raise SystemExit('Davetlerim sabit mobil yerleşim düzenlemesi eksik')
+          layout_replace = layout_mod.find('replace')
+          layout_css = layout_replace.text if layout_replace is not None else ''
+          if 'overflow: visible' not in layout_css or 'min-width: 0' not in layout_css or '@media (max-width: 420px)' not in layout_css:
+              raise SystemExit('Davetlerim kaydırmasız mobil CSS kuralları eksik')
 
           with open(f'{root}/Admin/Controller/ReferralCompat.php', encoding='utf-8') as f:
               admin_compat = f.read()
