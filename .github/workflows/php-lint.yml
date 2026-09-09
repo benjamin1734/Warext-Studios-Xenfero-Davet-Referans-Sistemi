@@ -75,8 +75,8 @@ jobs:
               parsed[path] = ET.parse(path)
               print(path)
 
-          if addon['version_id'] < 1000109 or addon['version_string'] != '1.0.1':
-              raise SystemExit('1.0.1 sürüm bilgisi beklenen değerde değil')
+          if addon['version_id'] < 1010000 or addon['version_string'] != '1.1.0':
+              raise SystemExit('1.1.0 sürüm bilgisi beklenen değerde değil')
 
           limit_checks = [
               ('cron.xml', './/entry', ['entry_id']),

@@ -6,9 +6,9 @@ Eklenti her kullanıcıya kendine özel, kalıcı ve benzersiz bir davet kodu il
 
 ## Güncel sürüm
 
-**V1 — 1.0.0**
+**V1.1 — 1.1.0**
 
-V1, temel ve yönetim özellikleri tamamlanmış kararlı sürümdür.
+V1.1, Admin CP davet kayıtlarına manuel onaylama, beklemeye alma, reddetme ve kalıcı silme araçlarını ekleyen kararlı sürümdür.
 
 ## Temel özellikler
 
@@ -130,11 +130,13 @@ Varsayılan değerler:
 
 Şartları tamamlamayan kayıtlar bekleyen durumda tutulur. Şartları tamamladıktan sonra sistem tarafından otomatik olarak geçerli hale getirilir.
 
+Yönetici, Admin CP üzerinden gerekli gördüğü bir bekleyen veya incelemedeki daveti manuel olarak geçerli hale getirebilir. Manuel onay hesap yaşı ve mesaj sayısı eşiklerini yönetici kararıyla geçersiz kılar; hesap silinmesi, ban veya davetçinin geçersiz hale gelmesi gibi temel bütünlük kontrolleri korunur.
+
 ## Davet durumları
 
 - **Bekleyen:** Kullanıcı kayıt olmuş ancak gerekli şartları henüz tamamlamamış.
 - **İncelemede:** Kayıtta kötüye kullanım ihtimali tespit edilmiş ve yetkili kontrolü gerekiyor.
-- **Geçerli:** Davet gerekli şartları karşılıyor.
+- **Geçerli:** Davet gerekli şartları karşılıyor veya yönetici tarafından manuel onaylanmış.
 - **Reddedildi:** Davet geçersiz sayılmış veya yetkili tarafından reddedilmiş.
 
 İnceleme durumundaki bir kayıt otomatik olarak geçerli hale getirilmez.
@@ -156,6 +158,7 @@ Sistem sahte hesaplarla davet sayısı yükseltilmesini zorlaştırmak için bir
 - Ağ karşılaştırması için tek yönlü HMAC-SHA256 değerleri kullanılır.
 - Ağ kontrol verileri belirlenen saklama süresi sonunda otomatik temizlenir.
 - Kritik kod, inceleme ve ödül işlemlerinde veritabanı kilitleri ve işlemsel kayıt kullanılır.
+- Admin CP manuel davet işlemleri satır kilidi ve veritabanı transaction'ı ile uygulanır.
 
 ## Yetkili işlemleri
 
@@ -199,8 +202,14 @@ Buradan:
 - Davet edilen kullanıcıya göre filtreleme
 - Davet durumuna göre filtreleme
 - Tarih aralığına göre filtreleme
+- Bekleyen, incelemedeki veya reddedilmiş daveti manuel onaylama
+- Daveti tekrar bekleyen duruma alma
+- Daveti manuel reddetme
+- Davet kaydını onay ekranı ile kalıcı silme
 
 yönetilebilir ve görüntülenebilir.
+
+Geçerli bir davet manuel olarak beklemeye alındığında, reddedildiğinde veya silindiğinde davetçinin ödül uygunluğu yeniden hesaplanır. Manuel onay ve ret işlemlerinde yönetici ve işlem zamanı mevcut inceleme alanlarına kaydedilir.
 
 Sistem ayrıca Admin CP üzerinden tamamen aktif veya pasif hale getirilebilir. Sistem kapatıldığında mevcut veriler silinmez ve yönetim/bakım işlemleri çalışmaya devam eder.
 
@@ -215,6 +224,8 @@ Otomatik olarak:
 - Kodu olmayan eski kullanıcılara kod oluşturulur.
 - Ödül uygunlukları kontrol edilir.
 - Süresi dolmuş ağ kontrol verileri temizlenir.
+
+Manuel onaylanan davetlerde hesap yaşı ve mesaj sayısı tekrar zorunlu tutulmaz; buna karşılık kullanıcı ve davetçi hesap bütünlüğü günlük yeniden doğrulamada kontrol edilmeye devam eder.
 
 İşlemler parçalara bölünerek çalıştırıldığı için büyük kullanıcı tablolarında gereksiz yük oluşturulması azaltılır.
 
@@ -267,7 +278,7 @@ Mevcut XenForo kullanıcılarının eksik davet kodları kurulum sonrasında oto
 
 ## Güncelleme
 
-0.1.0, 0.2.0, 0.3.0, 0.4.0 veya 0.4.1 sürümünden V1'e yükseltme desteklenir. Dosyaları güncelledikten sonra XenForo Admin CP içinden eklenti yükseltmesini çalıştırmak yeterlidir. Manuel SQL işlemi gerekmez.
+0.1.0, 0.2.0, 0.3.0, 0.4.0, 0.4.1, 1.0.0 veya 1.0.1 sürümünden 1.1.0'a yükseltme desteklenir. Dosyaları güncelledikten sonra XenForo Admin CP içinden eklenti yükseltmesini çalıştırmak yeterlidir. Manuel SQL işlemi gerekmez.
 
 ## Kaynak kod kuralları
 
