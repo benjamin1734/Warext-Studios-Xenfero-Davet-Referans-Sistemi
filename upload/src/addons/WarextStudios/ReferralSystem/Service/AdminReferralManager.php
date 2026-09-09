@@ -149,9 +149,9 @@ class AdminReferralManager extends AbstractService
 
     protected function assertActorCanManage(User $actor, Referral $referral): void
     {
-        if ((int)$actor->user_id <= 0)
+        if ((int)$actor->user_id <= 0 || !(bool)$actor->is_admin)
         {
-            throw new \LogicException('Bu işlem için giriş yapmış bir yönetici hesabı gerekli.');
+            throw new \LogicException('Bu işlem için bir yönetici hesabı gerekli.');
         }
 
         if ((int)$actor->user_id === (int)$referral->inviter_user_id)
