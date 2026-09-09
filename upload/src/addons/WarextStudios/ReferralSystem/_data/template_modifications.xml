@@ -332,4 +332,44 @@ $0]]></replace>
     </xf:formrow>
 </xf:if>]]></replace>
   </modification>
+  <modification type="admin" template="wrxt_referral_admin_invites" modification_key="wrxt_ref_admin_invite_tools" description="Davet kayıtlarına manuel yönetim araçları ekler" execution_order="100" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:cell><xf:if is="$referral.risk_reason">{$referral.risk_reason}<xf:else />—</xf:if></xf:cell>]]></find>
+    <replace><![CDATA[<xf:cell>
+    <xf:if is="$referral.risk_reason == 'manual_approved'">
+        <span class="label label--green">Yönetici manuel onayı</span>
+    <xf:elseif is="$referral.risk_reason == 'manual_rejected'" />
+        <span class="label label--red">Yönetici reddi</span>
+    <xf:elseif is="$referral.risk_reason" />
+        {$referral.risk_reason}
+    <xf:else />
+        —
+    </xf:if>
+</xf:cell>
+<xf:cell>
+    <div class="buttonGroup" style="display:flex;flex-wrap:wrap;gap:4px;min-width:230px;">
+        <xf:if is="$referral.status != 'valid'">
+            <xf:form action="{{ link('referral-system/invite-approve') }}" style="display:inline;">
+                <input type="hidden" name="referral_id" value="{$referral.referral_id}" />
+                <xf:button type="submit" class="button--primary button--small">Manuel onayla</xf:button>
+            </xf:form>
+        </xf:if>
+        <xf:if is="$referral.status != 'pending'">
+            <xf:form action="{{ link('referral-system/invite-pending') }}" style="display:inline;">
+                <input type="hidden" name="referral_id" value="{$referral.referral_id}" />
+                <xf:button type="submit" class="button--link button--small">Beklemeye al</xf:button>
+            </xf:form>
+        </xf:if>
+        <xf:if is="$referral.status != 'rejected'">
+            <xf:form action="{{ link('referral-system/invite-reject') }}" style="display:inline;">
+                <input type="hidden" name="referral_id" value="{$referral.referral_id}" />
+                <xf:button type="submit" class="button--link button--small">Reddet</xf:button>
+            </xf:form>
+        </xf:if>
+        <xf:form action="{{ link('referral-system/invite-delete') }}" style="display:inline;" data-xf-init="confirm" data-confirm="Bu davet kaydı kalıcı olarak silinecek. Bu işlem geri alınamaz.">
+            <input type="hidden" name="referral_id" value="{$referral.referral_id}" />
+            <xf:button type="submit" class="button--link button--small">Kalıcı sil</xf:button>
+        </xf:form>
+    </div>
+</xf:cell>]]></replace>
+  </modification>
 </template_modifications>
