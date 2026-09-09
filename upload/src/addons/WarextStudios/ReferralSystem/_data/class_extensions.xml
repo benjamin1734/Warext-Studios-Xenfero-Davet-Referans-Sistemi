@@ -2,4 +2,6 @@
 <class_extensions>
   <extension from_class="XF\Entity\User" to_class="WarextStudios\ReferralSystem\XF\Entity\User" execute_order="10" active="1"/>
   <extension from_class="XF\Entity\UserGroup" to_class="WarextStudios\ReferralSystem\XF\Entity\UserGroup" execute_order="10" active="1"/>
+  <extension from_class="WarextStudios\ReferralSystem\Admin\Controller\Referral" to_class="WarextStudios\ReferralSystem\Admin\Controller\ReferralTools" execute_order="10" active="1"/>
+  <extension from_class="WarextStudios\ReferralSystem\Repository\Referral" to_class="WarextStudios\ReferralSystem\Repository\ReferralTools" execute_order="10" active="1"/>
 </class_extensions>
