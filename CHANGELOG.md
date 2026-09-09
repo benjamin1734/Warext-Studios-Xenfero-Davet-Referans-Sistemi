@@ -1,5 +1,22 @@
 # Değişiklik Günlüğü
 
+## 1.1.0 - 2026-09-09
+
+### Admin CP davet yönetimi
+
+- Admin CP > Davet kayıtları ekranına her davet için doğrudan yönetim araçları eklendi.
+- Bekleyen, incelemedeki veya reddedilmiş bir davet yönetici tarafından manuel olarak geçerli hale getirilebilir.
+- Manuel onay, hesap yaşı ve mesaj sayısı otomatik eşiklerini yönetici kararıyla geçersiz kılan kalıcı bir override olarak saklanır.
+- Manuel onaylı davetler otomatik bakım sırasında yalnızca davetçi/davet edilen hesap geçerliliği, ban veya hesap silinmesi gibi temel bütünlük koşulları bozulursa yeniden değerlendirilir.
+- Davetler tekrar bekleyen duruma alınabilir; bu işlem manuel override işaretini temizler ve kaydı yeniden otomatik değerlendirme akışına bırakır.
+- Davetler yönetici tarafından reddedilebilir.
+- Davet kayıtları Admin CP üzerinden kalıcı olarak silinebilir.
+- Geçerli bir davet reddedildiğinde, beklemeye alındığında veya silindiğinde davetçinin ödül uygunluğu yeniden hesaplanır.
+- Manuel onay ve manuel ret işlemlerinde işlemi yapan yönetici ile işlem zamanı mevcut inceleme alanlarına kaydedilir.
+- Yönetici kendi oluşturduğu davet kaydını manuel olarak yönetemez.
+- Durum değişiklikleri satır kilidi ve veritabanı transaction'ı ile korunur.
+- Admin CP listesinde manuel onay ve manuel ret kayıtları ayırt edilebilir şekilde gösterilir.
+
 ## 1.0.0 - 2026-08-23
 
 ### V1 kararlı sürüm
