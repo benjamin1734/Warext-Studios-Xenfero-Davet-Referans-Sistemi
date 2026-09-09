@@ -332,7 +332,7 @@ $0]]></replace>
     </xf:formrow>
 </xf:if>]]></replace>
   </modification>
-  <modification type="admin" template="wrxt_referral_admin_invites" modification_key="wrxt_ref_admin_invite_tools" description="Davet kayıtlarına manuel yönetim araçları ekler" execution_order="100" enabled="1" action="str_replace">
+  <modification type="admin" template="wrxt_referral_admin_invites" modification_key="wrxt_ref_invite_tools" description="Davet kayıtlarına manuel yönetim araçları ekler" execution_order="100" enabled="1" action="str_replace">
     <find><![CDATA[<xf:cell><xf:if is="$referral.risk_reason">{$referral.risk_reason}<xf:else />—</xf:if></xf:cell>]]></find>
     <replace><![CDATA[<xf:cell>
     <xf:if is="$referral.risk_reason == 'manual_approved'">
@@ -365,9 +365,9 @@ $0]]></replace>
                 <xf:button type="submit" class="button--link button--small">Reddet</xf:button>
             </xf:form>
         </xf:if>
-        <xf:form action="{{ link('referral-system/invite-delete') }}" style="display:inline;" data-xf-init="confirm" data-confirm="Bu davet kaydı kalıcı olarak silinecek. Bu işlem geri alınamaz.">
+        <xf:form action="{{ link('referral-system/invite-delete') }}" style="display:inline;">
             <input type="hidden" name="referral_id" value="{$referral.referral_id}" />
-            <xf:button type="submit" class="button--link button--small">Kalıcı sil</xf:button>
+            <xf:button type="submit" class="button--link button--small" onclick="return window.confirm('Bu davet kaydı kalıcı olarak silinecek. Bu işlem geri alınamaz.')">Kalıcı sil</xf:button>
         </xf:form>
     </div>
 </xf:cell>]]></replace>
