@@ -58,15 +58,7 @@ jobs:
           VERSION: ${{ steps.version.outputs.version }}
         shell: bash
         run: |
-          cat > /tmp/release-notes.md <<'EOF'
-XenForo Admin CP > Add-ons > Install/upgrade from archive bölümüne doğrudan yüklenebilir kurulum paketidir. ZIP kökünde yalnızca `upload/` dizini bulunur.
-
----
-
-## English
-
-This is a direct-installation package that can be uploaded through XenForo Admin CP > Add-ons > Install/upgrade from archive. The ZIP root contains only the `upload/` directory.
-EOF
+          echo 'WGVuRm9ybyBBZG1pbiBDUCA+IEFkZC1vbnMgPiBJbnN0YWxsL3VwZ3JhZGUgZnJvbSBhcmNoaXZlIGLDtmzDvG3DvG5lIGRvxJ9ydWRhbiB5w7xrbGVuZWJpbGlyIGt1cnVsdW0gcGFrZXRpZGlyLiBaSVAga8O2a8O8bmRlIHlhbG7EsXpjYSBgdXBsb2FkL2AgZGl6aW5pIGJ1bHVudXIuCgotLS0KCiMjIEVuZ2xpc2gKClRoaXMgaXMgYSBkaXJlY3QtaW5zdGFsbGF0aW9uIHBhY2thZ2UgdGhhdCBjYW4gYmUgdXBsb2FkZWQgdGhyb3VnaCBYZW5Gb3JvIEFkbWluIENQID4gQWRkLW9ucyA+IEluc3RhbGwvdXBncmFkZSBmcm9tIGFyY2hpdmUuIFRoZSBaSVAgcm9vdCBjb250YWlucyBvbmx5IHRoZSBgdXBsb2FkL2AgZGlyZWN0b3J5Lgo=' | base64 --decode > /tmp/release-notes.md
           git tag -f "$TAG" "$GITHUB_SHA"
           git push -f origin "refs/tags/$TAG"
           gh release delete "$TAG" --yes >/dev/null 2>&1 || true
