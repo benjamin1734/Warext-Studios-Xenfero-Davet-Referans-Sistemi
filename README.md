@@ -303,3 +303,307 @@ Mevcut XenForo kullanıcılarının eksik davet kodları kurulum sonrasında oto
 ## Lisans
 
 MIT License
+
+---
+
+# English
+
+Warext Studios XenForo Invitation & Referral System is an open-source invitation, referral, and reward add-on for XenForo 2.3.x.
+
+The add-on creates a permanent and unique invitation code and personal invitation link for every user. Members can invite friends using either the link or code, track invitation status, and earn rewards as they reach configured valid-invitation milestones.
+
+## Current version
+
+**V1.1 — 1.1.0**
+
+V1.1 is the stable release that adds manual approval, return-to-pending, rejection, and permanent deletion tools for invitation records in Admin CP.
+
+## Main features
+
+### Personal invitation code and link
+
+- A unique invitation code is generated automatically for every user.
+- Every invitation code has a personal invitation URL.
+- A user's code normally remains unchanged.
+- Normal users cannot change their own invitation code.
+- Authorized user groups can change codes when permission is granted.
+- Staff can suspend or reactivate an invitation code.
+- A code that previously belonged to one user can never be assigned to another user.
+
+## My Invitations page
+
+Users have a dedicated page for monitoring their own referral system.
+
+The page can display:
+
+- Total invitations
+- Valid invitations
+- Pending invitations
+- Invitations awaiting review
+- Personal invitation link
+- Personal invitation code
+- One-click copy buttons
+- WhatsApp sharing
+- Telegram sharing
+- Invitation QR code generated with XenForo's bundled QR library
+- Invitation progress bar
+- Reward milestones for configured invitation counts
+- Earned rewards
+- Recently invited users and their statuses
+- Link to the full paginated invitation history
+
+The invitation link and code fields use a XenForo-compatible combined input/copy layout that avoids overflow on mobile devices.
+
+### Full invitation history
+
+Users can view all invitation records on a separate paginated screen and filter the history by valid, pending, under-review, and rejected status.
+
+## XenForo alerts
+
+Users receive native XenForo alerts when:
+
+- An invited account becomes a valid invitation
+- An invitation reward is earned
+- A reward is revoked because its requirements are no longer satisfied
+
+No external notification service is used.
+
+## Invitation progress and reward system
+
+Administrators can create any number of invitation milestones.
+
+Examples:
+
+- 1 valid invitation → First Invitation reward
+- 5 valid invitations → Inviter reward
+- 10 valid invitations → Active Inviter reward
+- 25 valid invitations → Community Ambassador reward
+
+Each milestone can define:
+
+- Required valid invitation count
+- Reward name
+- Description
+- Font Awesome icon
+- Custom reward image
+- Reward type
+- User-group reward
+- Whether the reward should be revoked when the milestone is no longer valid
+- Display order
+- Active/inactive status
+
+### Supported reward types
+
+**Visual reward:** shown as an earned reward in the user's invitation history.
+
+**Additional user-group reward:** when the required valid invitation count is reached, the user is automatically added to the selected XenForo secondary user group.
+
+User-group operations use XenForo's own user-group change service. Existing user groups are not directly overwritten.
+
+Each reward is created only once per user. Database-level checks prevent the same reward from being granted multiple times.
+
+Failed reward deliveries can be retried individually or in bulk from Admin CP.
+
+## Registration system
+
+Invitations can be used in two ways:
+
+### Invitation link
+
+A user shares their personal link. When a visitor opens it, the referral information is carried into the registration screen.
+
+### Invitation code
+
+The personal code can be entered manually into the Invitation Code field during registration.
+
+Invalid, suspended, or unavailable codes are rejected during registration.
+
+An account can be linked to only one inviter. After registration is completed, the inviter cannot be changed later.
+
+## Valid invitation requirements
+
+A newly registered account does not become a valid invitation immediately.
+
+Administrators can configure:
+
+- Minimum account age
+- Minimum post count
+
+Default values:
+
+- Minimum account age: 3 days
+- Minimum post count: 3
+
+Accounts that do not yet meet the conditions remain pending and are automatically marked valid after satisfying them.
+
+An administrator can manually approve a pending or under-review invitation in Admin CP. Manual approval can override the account-age and post-count thresholds, while fundamental integrity checks such as deleted accounts, bans, or an invalid inviter remain enforced.
+
+## Invitation statuses
+
+- **Pending:** the user registered but has not yet met the required conditions.
+- **Under review:** possible abuse was detected and staff review is required.
+- **Valid:** the invitation meets the requirements or was manually approved by an administrator.
+- **Rejected:** the invitation was considered invalid or manually rejected by staff.
+
+An invitation under review never becomes valid automatically.
+
+## Abuse protection
+
+The system uses multiple controls to make artificial referral-count inflation more difficult.
+
+- Users cannot invite themselves.
+- An account can be linked to only one inviter.
+- Invitation codes are not generated from predictable user IDs.
+- Secure random values are used to generate codes.
+- Invitation codes are unique at database level.
+- Previously used codes cannot be reassigned to other users.
+- Suspended codes cannot be used for new registrations.
+- Repeated registrations through the same network for one inviter can be placed under review.
+- Accounts created from the same network as the inviter can be placed under review.
+- Raw IP addresses are not stored in add-on tables.
+- One-way HMAC-SHA256 values are used for network comparison.
+- Network-control data is automatically deleted after the configured retention period.
+- Critical code, review, and reward operations use database locking and transactions.
+- Manual Admin CP invitation operations use row locking and database transactions.
+
+## Staff operations
+
+Two management permissions are available through XenForo user-group permissions:
+
+- Manage invitation codes
+- Review suspicious invitations
+
+Users with invitation-code management permission can:
+
+- Search for users.
+- View invitation codes.
+- Change invitation codes.
+- Suspend codes.
+- Reactivate codes.
+- Enter a suspension reason.
+
+Authorized code changes are stored in the operation history.
+
+Users with suspicious-invitation review permission can approve or reject records in the review queue. A staff member cannot approve an invitation record they created themselves.
+
+## Admin CP
+
+Admin CP contains a dedicated Invitation & Referral System section.
+
+Administrators can view and manage:
+
+- General system statistics
+- Total and active invitation codes
+- Reserved historical invitation codes
+- Total, valid, pending, under-review, and rejected invitations
+- Reward records and delivery status
+- Invitation milestones
+- Recent invitation-code changes
+- Reward-delivery errors
+- Bulk rechecking of failed rewards
+- Retrying a single failed reward
+- Per-user invitation detail screens
+- A user's code, rewards, recent invitations, and code-operation history in one screen
+- Filtering by inviter
+- Filtering by invited user
+- Filtering by invitation status
+- Filtering by date range
+- Manual approval of pending, under-review, or rejected invitations
+- Returning an invitation to pending state
+- Manual rejection
+- Permanent deletion with confirmation
+
+When a valid invitation is manually returned to pending, rejected, or deleted, the inviter's reward eligibility is recalculated. Manual approval and rejection store the administrator and operation time in the existing review fields.
+
+The entire system can also be enabled or disabled from Admin CP. Disabling it does not delete existing data, and management/maintenance operations continue to work.
+
+## Automatic maintenance
+
+To avoid processing every user in one request on large forums, the add-on uses XenForo's background job system.
+
+Automatically:
+
+- Pending invitations are checked.
+- Previously valid invitations are revalidated.
+- Codes are created for older users who do not have one.
+- Reward eligibility is checked.
+- Expired network-control data is cleaned up.
+
+Manually approved invitations are not forced to satisfy account-age and post-count thresholds again, but user and inviter account integrity continues to be checked during daily revalidation.
+
+Operations are processed in chunks to reduce unnecessary load on large user tables.
+
+## Database
+
+Required tables are created automatically during installation. No manual SQL import is required.
+
+Tables used:
+
+- `xf_wrxt_referral_code`
+- `xf_wrxt_referral_code_reservation`
+- `xf_wrxt_referral`
+- `xf_wrxt_referral_milestone`
+- `xf_wrxt_referral_reward`
+- `xf_wrxt_referral_code_log`
+
+Required table and field changes are applied automatically by XenForo's add-on upgrade system.
+
+After the V1 upgrade completes, missing user codes and reward eligibility are rechecked in the background.
+
+## Privacy
+
+- Raw IP addresses are not stored.
+- One-way hashes are used for network checks.
+- Network-control values in invitation records are retained for 90 days by default.
+- The invitation-code owner's network-control value follows the same retention policy.
+- Retention duration can be changed from Admin CP.
+- QR generation runs client-side with XenForo's bundled library; invitation links are not sent to an external service for QR generation.
+
+## XenForo compatibility
+
+- XenForo 2.3.0+
+- PHP 8.1+
+- Syntax validation for PHP 8.1, 8.2, 8.3, and 8.4
+
+The add-on does not modify XenForo core files.
+
+It does not require a custom domain, custom theme, credits add-on, or any other third-party add-on.
+
+## Installation
+
+1. Upload the contents of the `upload` directory into the XenForo installation directory.
+2. Open Admin CP > Add-ons.
+3. Install `Warext Studios - Davet Referans Sistemi`.
+4. Configure the referral settings from Admin CP > Options.
+5. Grant the required invitation-management permissions to the appropriate user groups.
+6. Create reward milestones from the Invitation & Referral System section.
+
+Missing invitation codes for existing XenForo users are generated automatically after installation.
+
+## Upgrade
+
+Upgrading to 1.1.0 is supported from 0.1.0, 0.2.0, 0.3.0, 0.4.0, 0.4.1, 1.0.0, and 1.0.1. After updating the files, run the XenForo add-on upgrade from Admin CP. No manual SQL operation is required.
+
+## Source-code rules
+
+- XenForo core files are never modified.
+- Source PHP files do not use explanatory comments, inline comments, or PHPDoc.
+- PHP-tokenizer-based automated validation prevents source comments.
+- User input is validated server-side.
+- Staff operations are enforced at service level, not only in the interface.
+- PHP, JSON, and XML files are validated through GitHub Actions.
+
+## Project documentation
+
+- `CHANGELOG.md` — release changes
+- `SECURITY.md` — security policy
+- `CONTRIBUTING.md` — contribution guidelines
+- `docs/ARCHITECTURE.md` — technical architecture
+
+## Add-on ID
+
+`WarextStudios/ReferralSystem`
+
+## License
+
+MIT License
