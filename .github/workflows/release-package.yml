@@ -58,7 +58,16 @@ jobs:
           VERSION: ${{ steps.version.outputs.version }}
         shell: bash
         run: |
+          cat > /tmp/release-notes.md <<'EOF'
+XenForo Admin CP > Add-ons > Install/upgrade from archive bölümüne doğrudan yüklenebilir kurulum paketidir. ZIP kökünde yalnızca `upload/` dizini bulunur.
+
+---
+
+## English
+
+This is a direct-installation package that can be uploaded through XenForo Admin CP > Add-ons > Install/upgrade from archive. The ZIP root contains only the `upload/` directory.
+EOF
           git tag -f "$TAG" "$GITHUB_SHA"
           git push -f origin "refs/tags/$TAG"
           gh release delete "$TAG" --yes >/dev/null 2>&1 || true
-          gh release create "$TAG" "dist/$FILE" --target "$GITHUB_SHA" --title "Warext Studios - XenForo Davet Referans Sistemi V$VERSION" --notes "XenForo Admin CP > Add-ons > Install/upgrade from archive bölümüne doğrudan yüklenebilir kurulum paketidir. ZIP kökünde yalnızca upload/ dizini bulunur."
+          gh release create "$TAG" "dist/$FILE" --target "$GITHUB_SHA" --title "Warext Studios - XenForo Davet Referans Sistemi V$VERSION" --notes-file /tmp/release-notes.md
