@@ -1,4 +1,6 @@
-# Warext Studios | XenForo Davet Referans Sistemi
+# Warext Studios | XenForo Referral System
+
+## Türkçe
 
 XenForo 2.3.x için açık kaynak davet, referans ve ödül eklentisidir.
 
@@ -304,9 +306,15 @@ Mevcut XenForo kullanıcılarının eksik davet kodları kurulum sonrasında oto
 
 MIT License
 
+## Destek
+
+Sorularınız, hata bildirimleriniz, kurulum desteği ve Warext Studios XenForo eklentileriyle ilgili yardım için destek Discord sunucumuza katılabilirsiniz:
+
+**Discord:** https://discord.gg/tgsV5XMcFS
+
 ---
 
-# English
+## English
 
 Warext Studios XenForo Invitation & Referral System is an open-source invitation, referral, and reward add-on for XenForo 2.3.x.
 
@@ -607,3 +615,9 @@ Upgrading to 1.1.0 is supported from 0.1.0, 0.2.0, 0.3.0, 0.4.0, 0.4.1, 1.0.0, a
 ## License
 
 MIT License
+
+## Support
+
+For questions, bug reports, installation support, and help with Warext Studios XenForo add-ons, you can join our support Discord server:
+
+**Discord:** https://discord.gg/tgsV5XMcFS
