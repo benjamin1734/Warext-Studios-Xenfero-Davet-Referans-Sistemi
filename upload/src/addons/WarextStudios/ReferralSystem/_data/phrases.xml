@@ -55,4 +55,105 @@
   <phrase title="wrxt_referral_error_threshold_duplicate" version_id="1000102" version_string="1.0.0">Bu davet sayısı için zaten bir ödül hedefi bulunuyor.</phrase>
   <phrase title="wrxt_referral_error_reward_history_locked" version_id="1000102" version_string="1.0.0">Teslim edilmiş ödül geçmişi bulunan bir hedefin gerekli davet sayısı, ödül türü veya kullanıcı grubu değiştirilemez. Hedefi pasife alıp yeni bir hedef oluşturun.</phrase>
   <phrase title="wrxt_referral_error_reward_history_delete" version_id="1000102" version_string="1.0.0">Bu hedefe bağlı teslim edilmiş ödül geçmişi bulunduğu için silinemez. Bunun yerine hedefi pasife alın.</phrase>
+  <phrase title="wrxt_ref_i18n_status" version_id="1020000" version_string="1.2.0"><![CDATA[Durum]]></phrase>
+  <phrase title="wrxt_ref_i18n_username" version_id="1020000" version_string="1.2.0"><![CDATA[Kullanıcı adı]]></phrase>
+  <phrase title="wrxt_ref_i18n_6_24_characters_letters_and_numbers_only" version_id="1020000" version_string="1.2.0"><![CDATA[6-24 karakter, yalnızca harf ve rakam.]]></phrase>
+  <phrase title="wrxt_ref_i18n_code_status" version_id="1020000" version_string="1.2.0"><![CDATA[Kod durumu]]></phrase>
+  <phrase title="wrxt_ref_i18n_suspension_reason" version_id="1020000" version_string="1.2.0"><![CDATA[Askıya alma nedeni]]></phrase>
+  <phrase title="wrxt_ref_i18n_a_reason_is_required_when_suspending_the_code" version_id="1020000" version_string="1.2.0"><![CDATA[Kod askıya alınacaksa neden zorunludur.]]></phrase>
+  <phrase title="wrxt_ref_i18n_save" version_id="1020000" version_string="1.2.0"><![CDATA[Kaydet]]></phrase>
+  <phrase title="wrxt_ref_i18n_referring_user" version_id="1020000" version_string="1.2.0"><![CDATA[Davet eden kullanıcı]]></phrase>
+  <phrase title="wrxt_ref_i18n_referred_user" version_id="1020000" version_string="1.2.0"><![CDATA[Davet edilen kullanıcı]]></phrase>
+  <phrase title="wrxt_ref_i18n_start_date" version_id="1020000" version_string="1.2.0"><![CDATA[Başlangıç tarihi]]></phrase>
+  <phrase title="wrxt_ref_i18n_end_date" version_id="1020000" version_string="1.2.0"><![CDATA[Bitiş tarihi]]></phrase>
+  <phrase title="wrxt_ref_i18n_view" version_id="1020000" version_string="1.2.0"><![CDATA[Görüntüle]]></phrase>
+  <phrase title="wrxt_ref_i18n_required_valid_referrals" version_id="1020000" version_string="1.2.0"><![CDATA[Gerekli geçerli davet]]></phrase>
+  <phrase title="wrxt_ref_i18n_reward_name" version_id="1020000" version_string="1.2.0"><![CDATA[Ödül adı]]></phrase>
+  <phrase title="wrxt_ref_i18n_description" version_id="1020000" version_string="1.2.0"><![CDATA[Açıklama]]></phrase>
+  <phrase title="wrxt_ref_i18n_font_awesome_icon" version_id="1020000" version_string="1.2.0"><![CDATA[Font Awesome ikonu]]></phrase>
+  <phrase title="wrxt_ref_i18n_example_fa_gift_if_an_image_is_defined_it_is_shown" version_id="1020000" version_string="1.2.0"><![CDATA[Örnek: fa-gift. Görsel tanımlanırsa ikon yerine görsel gösterilir.]]></phrase>
+  <phrase title="wrxt_ref_i18n_reward_image" version_id="1020000" version_string="1.2.0"><![CDATA[Ödül görseli]]></phrase>
+  <phrase title="wrxt_ref_i18n_full_url_or_xenforo_local_data_data_or_styles_path" version_id="1020000" version_string="1.2.0"><![CDATA[Tam URL veya XenForo içi /data, data/ ya da styles/ yolu.]]></phrase>
+  <phrase title="wrxt_ref_i18n_reward_type" version_id="1020000" version_string="1.2.0"><![CDATA[Ödül türü]]></phrase>
+  <phrase title="wrxt_ref_i18n_reward_user_group" version_id="1020000" version_string="1.2.0"><![CDATA[Ödül kullanıcı grubu]]></phrase>
+  <phrase title="wrxt_ref_i18n_used_only_when_an_additional_user_group_reward_is_" version_id="1020000" version_string="1.2.0"><![CDATA[Yalnızca ek kullanıcı grubu ödülü seçildiğinde kullanılır.]]></phrase>
+  <phrase title="wrxt_ref_i18n_reward_when_requirement_is_lost" version_id="1020000" version_string="1.2.0"><![CDATA[Şart kaybedilirse ödül]]></phrase>
+  <phrase title="wrxt_ref_i18n_display_order" version_id="1020000" version_string="1.2.0"><![CDATA[Görüntüleme sırası]]></phrase>
+  <phrase title="wrxt_ref_i18n_your_referral_progress" version_id="1020000" version_string="1.2.0"><![CDATA[Davet ilerlemen]]></phrase>
+  <phrase title="wrxt_ref_i18n_valid" version_id="1020000" version_string="1.2.0"><![CDATA[Geçerli]]></phrase>
+  <phrase title="wrxt_ref_i18n_pending" version_id="1020000" version_string="1.2.0"><![CDATA[Bekleyen]]></phrase>
+  <phrase title="wrxt_ref_i18n_under_review" version_id="1020000" version_string="1.2.0"><![CDATA[İncelemede]]></phrase>
+  <phrase title="wrxt_ref_i18n_no_active_reward_milestones_have_been_defined_yet" version_id="1020000" version_string="1.2.0"><![CDATA[Henüz aktif ödül hedefi tanımlanmamış.]]></phrase>
+  <phrase title="wrxt_ref_i18n_my_rewards" version_id="1020000" version_string="1.2.0"><![CDATA[Ödüllerim]]></phrase>
+  <phrase title="wrxt_ref_i18n_revoked" version_id="1020000" version_string="1.2.0"><![CDATA[Geri alındı]]></phrase>
+  <phrase title="wrxt_ref_i18n_delivery_failed" version_id="1020000" version_string="1.2.0"><![CDATA[Teslim hatası]]></phrase>
+  <phrase title="wrxt_ref_i18n_invite_a_friend" version_id="1020000" version_string="1.2.0"><![CDATA[Arkadaşını davet et]]></phrase>
+  <phrase title="wrxt_ref_i18n_your_referral_code_has_been_suspended_by_staff_the" version_id="1020000" version_string="1.2.0"><![CDATA[Davet kodun yetkili tarafından askıya alınmış. Kod ve bağlantı yeni kayıtlar için kullanılamaz.]]></phrase>
+  <phrase title="wrxt_ref_i18n_referral_link" version_id="1020000" version_string="1.2.0"><![CDATA[Davet bağlantısı]]></phrase>
+  <phrase title="wrxt_ref_i18n_this_code_is_permanently_tied_to_your_account_and_" version_id="1020000" version_string="1.2.0"><![CDATA[Bu kod hesabına kalıcı olarak bağlıdır ve normal kullanıcı tarafından değiştirilemez.]]></phrase>
+  <phrase title="wrxt_ref_i18n_share_your_referral" version_id="1020000" version_string="1.2.0"><![CDATA[Davetini paylaş]]></phrase>
+  <phrase title="wrxt_ref_i18n_copy_link" version_id="1020000" version_string="1.2.0"><![CDATA[Bağlantıyı kopyala]]></phrase>
+  <phrase title="wrxt_ref_i18n_scan_the_qr_code_with_your_phone_to_open_the_refer" version_id="1020000" version_string="1.2.0"><![CDATA[QR kodu telefonundan taratarak davet bağlantısını açabilirsin.]]></phrase>
+  <phrase title="wrxt_ref_i18n_referral_code_management" version_id="1020000" version_string="1.2.0"><![CDATA[Davet kodu yönetimi]]></phrase>
+  <phrase title="wrxt_ref_i18n_review_suspicious_referrals" version_id="1020000" version_string="1.2.0"><![CDATA[Şüpheli davetleri incele]]></phrase>
+  <phrase title="wrxt_ref_i18n_recent_referrals" version_id="1020000" version_string="1.2.0"><![CDATA[Son davetlerin]]></phrase>
+  <phrase title="wrxt_ref_i18n_deleted_user" version_id="1020000" version_string="1.2.0"><![CDATA[Silinmiş kullanıcı]]></phrase>
+  <phrase title="wrxt_ref_i18n_view_all_referrals" version_id="1020000" version_string="1.2.0"><![CDATA[Tüm davetleri görüntüle]]></phrase>
+  <phrase title="wrxt_ref_i18n_you_do_not_have_any_referrals_yet" version_id="1020000" version_string="1.2.0"><![CDATA[Henüz davetin bulunmuyor.]]></phrase>
+  <phrase title="wrxt_ref_i18n_all_my_referrals" version_id="1020000" version_string="1.2.0"><![CDATA[Tüm davetlerim]]></phrase>
+  <phrase title="wrxt_ref_i18n_filter_referral_history" version_id="1020000" version_string="1.2.0"><![CDATA[Davet geçmişini filtrele]]></phrase>
+  <phrase title="wrxt_ref_i18n_all" version_id="1020000" version_string="1.2.0"><![CDATA[Tümü]]></phrase>
+  <phrase title="wrxt_ref_i18n_referral_history" version_id="1020000" version_string="1.2.0"><![CDATA[Davet geçmişi]]></phrase>
+  <phrase title="wrxt_ref_i18n_find_user" version_id="1020000" version_string="1.2.0"><![CDATA[Kullanıcı bul]]></phrase>
+  <phrase title="wrxt_ref_i18n_active" version_id="1020000" version_string="1.2.0"><![CDATA[Aktif]]></phrase>
+  <phrase title="wrxt_ref_i18n_suspended" version_id="1020000" version_string="1.2.0"><![CDATA[Askıya alınmış]]></phrase>
+  <phrase title="wrxt_ref_i18n_last_change" version_id="1020000" version_string="1.2.0"><![CDATA[Son değişiklik]]></phrase>
+  <phrase title="wrxt_ref_i18n_referrals_awaiting_review" version_id="1020000" version_string="1.2.0"><![CDATA[İnceleme bekleyen davetler]]></phrase>
+  <phrase title="wrxt_ref_i18n_reject" version_id="1020000" version_string="1.2.0"><![CDATA[Reddet]]></phrase>
+  <phrase title="wrxt_ref_i18n_no_referrals_are_awaiting_review" version_id="1020000" version_string="1.2.0"><![CDATA[İnceleme bekleyen davet bulunmuyor.]]></phrase>
+  <phrase title="wrxt_ref_i18n_system_summary" version_id="1020000" version_string="1.2.0"><![CDATA[Sistem özeti]]></phrase>
+  <phrase title="wrxt_ref_i18n_all_referral_records" version_id="1020000" version_string="1.2.0"><![CDATA[Tüm davet kayıtları]]></phrase>
+  <phrase title="wrxt_ref_i18n_user_details" version_id="1020000" version_string="1.2.0"><![CDATA[Kullanıcı detayları]]></phrase>
+  <phrase title="wrxt_ref_i18n_active_codes" version_id="1020000" version_string="1.2.0"><![CDATA[Aktif kod]]></phrase>
+  <phrase title="wrxt_ref_i18n_rejected" version_id="1020000" version_string="1.2.0"><![CDATA[Reddedilmiş]]></phrase>
+  <phrase title="wrxt_ref_i18n_total_reward_records" version_id="1020000" version_string="1.2.0"><![CDATA[Toplam ödül kaydı]]></phrase>
+  <phrase title="wrxt_ref_i18n_delivered_rewards" version_id="1020000" version_string="1.2.0"><![CDATA[Teslim edilen ödül]]></phrase>
+  <phrase title="wrxt_ref_i18n_revoked_rewards" version_id="1020000" version_string="1.2.0"><![CDATA[Geri alınan ödül]]></phrase>
+  <phrase title="wrxt_ref_i18n_reward_failures" version_id="1020000" version_string="1.2.0"><![CDATA[Ödül hatası]]></phrase>
+  <phrase title="wrxt_ref_i18n_code_management_records" version_id="1020000" version_string="1.2.0"><![CDATA[Kod yönetim kaydı]]></phrase>
+  <phrase title="wrxt_ref_i18n_reward_milestones" version_id="1020000" version_string="1.2.0"><![CDATA[Ödül hedefleri]]></phrase>
+  <phrase title="wrxt_ref_i18n_new_reward_milestone" version_id="1020000" version_string="1.2.0"><![CDATA[Yeni ödül hedefi]]></phrase>
+  <phrase title="wrxt_ref_i18n_delete" version_id="1020000" version_string="1.2.0"><![CDATA[Sil]]></phrase>
+  <phrase title="wrxt_ref_i18n_no_reward_milestones_found" version_id="1020000" version_string="1.2.0"><![CDATA[Ödül hedefi bulunmuyor.]]></phrase>
+  <phrase title="wrxt_ref_i18n_recent_code_changes" version_id="1020000" version_string="1.2.0"><![CDATA[Son kod değişiklikleri]]></phrase>
+  <phrase title="wrxt_ref_i18n_system" version_id="1020000" version_string="1.2.0"><![CDATA[Sistem]]></phrase>
+  <phrase title="wrxt_ref_i18n_no_code_change_records_yet" version_id="1020000" version_string="1.2.0"><![CDATA[Henüz kod değişikliği kaydı bulunmuyor.]]></phrase>
+  <phrase title="wrxt_ref_i18n_reward_delivery_failures" version_id="1020000" version_string="1.2.0"><![CDATA[Ödül teslim hataları]]></phrase>
+  <phrase title="wrxt_ref_i18n_retry_all" version_id="1020000" version_string="1.2.0"><![CDATA[Tümünü yeniden dene]]></phrase>
+  <phrase title="wrxt_ref_i18n_no_reward_delivery_failures" version_id="1020000" version_string="1.2.0"><![CDATA[Ödül teslim hatası bulunmuyor.]]></phrase>
+  <phrase title="wrxt_ref_i18n_referral_records" version_id="1020000" version_string="1.2.0"><![CDATA[Davet kayıtları]]></phrase>
+  <phrase title="wrxt_ref_i18n_no_records_matched_the_filters" version_id="1020000" version_string="1.2.0"><![CDATA[Filtrelere uygun kayıt bulunamadı.]]></phrase>
+  <phrase title="wrxt_ref_i18n_referral_user_details" version_id="1020000" version_string="1.2.0"><![CDATA[Davet kullanıcı detayları]]></phrase>
+  <phrase title="wrxt_ref_i18n_suspended_1" version_id="1020000" version_string="1.2.0"><![CDATA[Askıda]]></phrase>
+  <phrase title="wrxt_ref_i18n_reserved_code_count" version_id="1020000" version_string="1.2.0"><![CDATA[Korunan kod sayısı]]></phrase>
+  <phrase title="wrxt_ref_i18n_open_all_referral_records" version_id="1020000" version_string="1.2.0"><![CDATA[Tüm davet kayıtlarını aç]]></phrase>
+  <phrase title="wrxt_ref_i18n_open_xenforo_user_account" version_id="1020000" version_string="1.2.0"><![CDATA[XenForo kullanıcı hesabını aç]]></phrase>
+  <phrase title="wrxt_ref_i18n_rewards" version_id="1020000" version_string="1.2.0"><![CDATA[Ödüller]]></phrase>
+  <phrase title="wrxt_ref_i18n_no_reward_records_found" version_id="1020000" version_string="1.2.0"><![CDATA[Ödül kaydı bulunmuyor.]]></phrase>
+  <phrase title="wrxt_ref_i18n_recent_referrals_2" version_id="1020000" version_string="1.2.0"><![CDATA[Son davetler]]></phrase>
+  <phrase title="wrxt_ref_i18n_no_referral_records_found" version_id="1020000" version_string="1.2.0"><![CDATA[Davet kaydı bulunmuyor.]]></phrase>
+  <phrase title="wrxt_ref_i18n_code_action_history" version_id="1020000" version_string="1.2.0"><![CDATA[Kod işlem geçmişi]]></phrase>
+  <phrase title="wrxt_ref_i18n_no_code_action_history" version_id="1020000" version_string="1.2.0"><![CDATA[Kod işlem geçmişi bulunmuyor.]]></phrase>
+  <phrase title="wrxt_ref_i18n_visual_reward" version_id="1020000" version_string="1.2.0"><![CDATA[Görsel ödül]]></phrase>
+  <phrase title="wrxt_ref_i18n_additional_user_group_reward" version_id="1020000" version_string="1.2.0"><![CDATA[Ek kullanıcı grubu ödülü]]></phrase>
+  <phrase title="wrxt_ref_i18n_no_user_group_selected" version_id="1020000" version_string="1.2.0"><![CDATA[Kullanıcı grubu seçilmedi]]></phrase>
+  <phrase title="wrxt_ref_i18n_revoke" version_id="1020000" version_string="1.2.0"><![CDATA[Geri al]]></phrase>
+  <phrase title="wrxt_ref_i18n_keep_with_user" version_id="1020000" version_string="1.2.0"><![CDATA[Kullanıcıda bırak]]></phrase>
+  <phrase title="wrxt_ref_i18n_inactive" version_id="1020000" version_string="1.2.0"><![CDATA[Pasif]]></phrase>
+  <phrase title="wrxt_ref_i18n_edit_reward_milestone" version_id="1020000" version_string="1.2.0"><![CDATA[Ödül hedefini düzenle]]></phrase>
+  <phrase title="wrxt_ref_i18n_valid_referrals_x" version_id="1020000" version_string="1.2.0"><![CDATA[{count} geçerli davet]]></phrase>
+  <phrase title="wrxt_ref_i18n_progress_next_x" version_id="1020000" version_string="1.2.0"><![CDATA[{count} geçerli davet · Sonraki hedef {target} · {remaining} davet kaldı]]></phrase>
+  <phrase title="wrxt_ref_i18n_progress_complete_x" version_id="1020000" version_string="1.2.0"><![CDATA[{count} geçerli davet · Tüm mevcut hedeflere ulaştın]]></phrase>
+  <phrase title="wrxt_ref_i18n_code_x" version_id="1020000" version_string="1.2.0"><![CDATA[Kod: {code}]]></phrase>
+  <phrase title="wrxt_ref_i18n_user_x" version_id="1020000" version_string="1.2.0"><![CDATA[Kullanıcı #{id}]]></phrase>
 </phrases>
