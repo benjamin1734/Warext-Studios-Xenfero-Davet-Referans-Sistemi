@@ -1,3 +1,9 @@
+## 1.2.0 - 2026-09-26
+
+- Added native Turkish/English XenForo language support.
+- Moved referral dashboards, reward screens, history, review and ACP UI text to phrases.
+- Added importable Turkish and English XML language packs.
+
 # Değişiklik Günlüğü
 
 ## 1.1.0 - 2026-09-09
