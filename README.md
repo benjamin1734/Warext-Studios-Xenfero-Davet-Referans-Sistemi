@@ -6,12 +6,6 @@ Warext Studios XenForo Invitation & Referral System is an open-source invitation
 
 The add-on creates a permanent and unique invitation code and personal invitation link for every user. Members can invite friends using either the link or code, track invitation status, and earn rewards as they reach configured valid-invitation milestones.
 
-## Current version
-
-**V1.1 — 1.1.0**
-
-V1.1 is the stable release that adds manual approval, return-to-pending, rejection, and permanent deletion tools for invitation records in Admin CP.
-
 ## Main features
 
 ### Personal invitation code and link
@@ -274,10 +268,6 @@ It does not require a custom domain, custom theme, credits add-on, or any other 
 
 Missing invitation codes for existing XenForo users are generated automatically after installation.
 
-## Upgrade
-
-Upgrading to 1.1.0 is supported from 0.1.0, 0.2.0, 0.3.0, 0.4.0, 0.4.1, 1.0.0, and 1.0.1. After updating the files, run the XenForo add-on upgrade from Admin CP. No manual SQL operation is required.
-
 ## Source-code rules
 
 - XenForo core files are never modified.
@@ -289,7 +279,6 @@ Upgrading to 1.1.0 is supported from 0.1.0, 0.2.0, 0.3.0, 0.4.0, 0.4.1, 1.0.0, a
 
 ## Project documentation
 
-- `CHANGELOG.md` — release changes
 - `SECURITY.md` — security policy
 - `CONTRIBUTING.md` — contribution guidelines
 - `docs/ARCHITECTURE.md` — technical architecture
@@ -315,12 +304,6 @@ For questions, bug reports, installation support, and help with Warext Studios X
 XenForo 2.3.x için açık kaynak davet, referans ve ödül eklentisidir.
 
 Eklenti her kullanıcıya kendine özel, kalıcı ve benzersiz bir davet kodu ile davet bağlantısı oluşturur. Kullanıcılar arkadaşlarını bağlantı veya kod ile davet edebilir, davet durumlarını takip edebilir ve belirlenen davet sayılarına ulaştıkça ödül kazanabilir.
-
-## Güncel sürüm
-
-**V1.1 — 1.1.0**
-
-V1.1, Admin CP davet kayıtlarına manuel onaylama, beklemeye alma, reddetme ve kalıcı silme araçlarını ekleyen kararlı sürümdür.
 
 ## Temel özellikler
 
@@ -588,10 +571,6 @@ Eklenti XenForo çekirdek dosyalarını değiştirmez.
 
 Mevcut XenForo kullanıcılarının eksik davet kodları kurulum sonrasında otomatik olarak oluşturulur.
 
-## Güncelleme
-
-0.1.0, 0.2.0, 0.3.0, 0.4.0, 0.4.1, 1.0.0 veya 1.0.1 sürümünden 1.1.0'a yükseltme desteklenir. Dosyaları güncelledikten sonra XenForo Admin CP içinden eklenti yükseltmesini çalıştırmak yeterlidir. Manuel SQL işlemi gerekmez.
-
 ## Kaynak kod kuralları
 
 - XenForo çekirdeğinde değişiklik yapılmaz.
@@ -603,7 +582,6 @@ Mevcut XenForo kullanıcılarının eksik davet kodları kurulum sonrasında oto
 
 ## Proje belgeleri
 
-- `CHANGELOG.md` — sürüm değişiklikleri
 - `SECURITY.md` — güvenlik politikası
 - `CONTRIBUTING.md` — katkı kuralları
 - `docs/ARCHITECTURE.md` — teknik yapı
@@ -622,7 +600,5 @@ Sorularınız, hata bildirimleriniz, kurulum desteği ve Warext Studios XenForo 
 
 **Discord:** https://discord.gg/tgsV5XMcFS
 
-
 ## Language support / Dil desteği
 
-Version 1.2.0 adds native Turkish/English XenForo language packs under `languages/` and phrase-backed UI. See `LANGUAGE.md`.
